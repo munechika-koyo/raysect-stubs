@@ -1,6 +1,5 @@
 """Tests for raysect stubs."""
 
-import pytest
 from mypy import api
 
 

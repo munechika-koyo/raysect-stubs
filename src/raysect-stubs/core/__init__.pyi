@@ -1,10 +1,14 @@
-"""Core module type stubs."""
+"""Type stubs for raysect.core"""
 
-from typing import Any, Optional, TypeAlias, Union
+from typing import Any
 
-Number: TypeAlias = int | float
-
-# Re-exports from core submodules
-from .acceleration import *
-from .math import *
-from .scenegraph import *
+BACK: Any
+DOWN: Any
+FORWARD: Any
+GEOMETRY: Any
+LEFT: Any
+MATERIAL: Any
+NULL_TRANSFORM: Any
+ORIGIN: Any
+RIGHT: Any
+UP: Any

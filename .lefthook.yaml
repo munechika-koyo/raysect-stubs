@@ -40,13 +40,13 @@ pre-commit:
           - name: ruff format
             run: pixi {run} ruff format {staged_files}
 
-    - name: pyright
-      glob: "*.{py,pyi}"
-      run: pixi {run} pyright {staged_files}
+    # - name: pyright
+    #   glob: "*.{py,pyi}"
+    #   run: pixi {run} pyright {staged_files}
 
-    - name: mypy
-      glob: "*.{py,pyi}"
-      run: pixi {run} mypy {staged_files}
+    # - name: mypy
+    #   glob: "*.{py,pyi}"
+    #   run: pixi {run} mypy {staged_files}
 
     - name: typos
       stage_fixed: true

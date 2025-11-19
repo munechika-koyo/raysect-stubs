@@ -1,10 +1,3 @@
-"""Acceleration structures type stubs."""
+"""Type stubs for raysect.core.acceleration"""
 
-from typing import Protocol
-
-class Accelerator(Protocol):
-    def build(self) -> None: ...
-
-class KDTree:
-    def __init__(self, max_depth: int = ..., min_items: int = ...) -> None: ...
-    def build(self) -> None: ...
+# No public API detected - may need manual inspection

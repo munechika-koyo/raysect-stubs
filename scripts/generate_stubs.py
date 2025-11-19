@@ -7,67 +7,59 @@ type stub files (.pyi) for all public modules and classes by
 introspecting the loaded modules without reading source code.
 """
 
-import sys
+import argparse
+import importlib
 import inspect
 import pkgutil
-import importlib
-import argparse
+import sys
 from pathlib import Path
 from typing import Any
-
 
 # Dunder methods actually defined in Raysect source code (.pyx/.pxd files)
 # Categorized by functionality - order preserved for stub generation
 COMMON_DUNDER_METHODS_ORDERED = [
     # Object construction and destruction
-    '__init__',      # Object initialization
-    '__cinit__',     # Cython constructor
-    '__dealloc__',   # Cython destructor
-
+    "__init__",  # Object initialization
+    "__cinit__",  # Cython constructor
+    "__dealloc__",  # Cython destructor
     # String representation and conversion
-    '__repr__',      # Developer string representation
-    '__str__',       # User string representation
-
+    "__repr__",  # Developer string representation
+    "__str__",  # User string representation
     # Arithmetic operations (binary)
-    '__add__',       # Addition: a + b
-    '__radd__',      # Right addition: b + a
-    '__sub__',       # Subtraction: a - b
-    '__rsub__',      # Right subtraction: b - a
-    '__mul__',       # Multiplication: a * b
-    '__rmul__',      # Right multiplication: b * a
-    '__truediv__',   # True division: a / b
-    '__rtruediv__',  # Right true division: b / a
-    '__mod__',       # Modulo: a % b
-    '__rmod__',      # Right modulo: b % a
-    '__pow__',       # Power: a ** b
-    '__rpow__',      # Right power: b ** a
-
+    "__add__",  # Addition: a + b
+    "__radd__",  # Right addition: b + a
+    "__sub__",  # Subtraction: a - b
+    "__rsub__",  # Right subtraction: b - a
+    "__mul__",  # Multiplication: a * b
+    "__rmul__",  # Right multiplication: b * a
+    "__truediv__",  # True division: a / b
+    "__rtruediv__",  # Right true division: b / a
+    "__mod__",  # Modulo: a % b
+    "__rmod__",  # Right modulo: b % a
+    "__pow__",  # Power: a ** b
+    "__rpow__",  # Right power: b ** a
     # Arithmetic operations (unary)
-    '__neg__',       # Unary negation: -a
-    '__abs__',       # Absolute value: abs(a)
-
+    "__neg__",  # Unary negation: -a
+    "__abs__",  # Absolute value: abs(a)
     # Comparison operations
-    '__richcmp__',   # Cython rich comparison method
-    '__eq__',        # Equality: a == b
-    '__ne__',        # Inequality: a != b
-    '__lt__',        # Less than: a < b
-    '__le__',        # Less or equal: a <= b
-    '__gt__',        # Greater than: a > b
-    '__ge__',        # Greater or equal: a >= b
-
+    "__richcmp__",  # Cython rich comparison method
+    "__eq__",  # Equality: a == b
+    "__ne__",  # Inequality: a != b
+    "__lt__",  # Less than: a < b
+    "__le__",  # Less or equal: a <= b
+    "__gt__",  # Greater than: a > b
+    "__ge__",  # Greater or equal: a >= b
     # Sequence/container protocols
-    '__getitem__',   # Item access: a[key]
-    '__setitem__',   # Item assignment: a[key] = value
-    '__iter__',      # Iteration: for x in a
-    '__len__',       # Length: len(a)
-
+    "__getitem__",  # Item access: a[key]
+    "__setitem__",  # Item assignment: a[key] = value
+    "__iter__",  # Iteration: for x in a
+    "__len__",  # Length: len(a)
     # Callable protocol
-    '__call__',      # Function call: a()
-
+    "__call__",  # Function call: a()
     # Serialization support (pickling)
-    '__getstate__',  # Get object state for pickling
-    '__setstate__',  # Restore object state from pickling
-    '__reduce__',    # Reduce for pickling
+    "__getstate__",  # Get object state for pickling
+    "__setstate__",  # Restore object state from pickling
+    "__reduce__",  # Reduce for pickling
 ]
 
 # Create a set for quick lookup
@@ -84,24 +76,11 @@ def main():
   %(prog)s                    # Generate new files only (default)
   %(prog)s --overwrite        # Overwrite existing files
   %(prog)s -o output/dir      # Specify output directory
-  %(prog)s --overwrite -o .   # Overwrite in current directory"""
+  %(prog)s --overwrite -o .   # Overwrite in current directory""",
     )
-    parser.add_argument(
-        "--overwrite",
-        action="store_true",
-        help="Overwrite existing .pyi files (default: only create new files)"
-    )
-    parser.add_argument(
-        "-o", "--output",
-        type=Path,
-        default=Path("src/raysect-stubs"),
-        help="Output directory for stub files (default: src/raysect-stubs)"
-    )
-    parser.add_argument(
-        "--verbose", "-v",
-        action="store_true",
-        help="Enable verbose output"
-    )
+    parser.add_argument("--overwrite", action="store_true", help="Overwrite existing .pyi files (default: only create new files)")
+    parser.add_argument("-o", "--output", type=Path, default=Path("src/raysect-stubs"), help="Output directory for stub files (default: src/raysect-stubs)")
+    parser.add_argument("--verbose", "-v", action="store_true", help="Enable verbose output")
 
     args = parser.parse_args()
 
@@ -111,6 +90,7 @@ def main():
     # Check if raysect is available
     try:
         import raysect
+
         print(f"Found Raysect version: {getattr(raysect, '__version__', 'unknown')}")
     except ImportError:
         print("Error: Raysect library not found. Please install it first.")
@@ -139,7 +119,7 @@ def main():
         elif result == "skipped":
             skipped_count += 1
 
-    print(f"\nStub generation complete!")
+    print("\nStub generation complete!")
     print(f"Generated: {generated_count} stub files")
     if skipped_count > 0:
         print(f"Skipped: {skipped_count} existing files (use --overwrite to replace)")
@@ -155,9 +135,7 @@ def discover_modules() -> list[str]:
     modules.append("raysect")
 
     # Walk through all submodules
-    for importer, modname, ispkg in pkgutil.walk_packages(
-        raysect.__path__, raysect.__name__ + "."
-    ):
+    for _, modname, _ in pkgutil.walk_packages(raysect.__path__, raysect.__name__ + "."):
         # Skip test modules/packages
         if ".test" in modname or modname.endswith(".tests"):
             continue
@@ -185,7 +163,7 @@ def generate_module_stub(module_name: str, stub_dir: Path, overwrite: bool = Fal
         else:
             # Convert module name to path (e.g., raysect.core.math -> raysect-stubs/core/math)
             relative_path = module_name.replace("raysect.", "").replace(".", "/")
-            if hasattr(module, '__path__'):  # It's a package
+            if hasattr(module, "__path__"):  # It's a package
                 stub_file = stub_dir / relative_path / "__init__.pyi"
             else:  # It's a module
                 stub_file = stub_dir / f"{relative_path}.pyi"
@@ -219,9 +197,9 @@ def generate_stub_content(module: Any, module_name: str) -> str:
     ]
 
     # Get module docstring if available
-    if hasattr(module, '__doc__') and module.__doc__:
+    if hasattr(module, "__doc__") and module.__doc__:
         # Add first line of docstring as comment
-        first_line = module.__doc__.strip().split('\n')[0]
+        first_line = module.__doc__.strip().split("\n")[0]
         if first_line:
             lines.append(f"# {first_line}")
             lines.append("")
@@ -234,21 +212,21 @@ def generate_stub_content(module: Any, module_name: str) -> str:
 
     # Process classes
     classes = []
-    for name, obj in members.get('classes', []):
+    for name, obj in members.get("classes", []):
         if obj.__module__ == module_name:
             class_stub = generate_class_stub(obj, name, imports)
             classes.append(class_stub)
 
     # Process functions
     functions = []
-    for name, obj in members.get('functions', []):
+    for name, obj in members.get("functions", []):
         if obj.__module__ == module_name:
             func_stub = generate_function_stub(obj, name, imports)
             functions.append(func_stub)
 
     # Process constants and variables
     constants = []
-    for name, obj in members.get('constants', []):
+    for name, obj in members.get("constants", []):
         const_stub = generate_constant_stub(name, obj, imports)
         constants.append(const_stub)
 
@@ -286,7 +264,7 @@ def get_public_members(module: Any) -> dict[str, list]:
 
     for name, obj in inspect.getmembers(module):
         # Skip private members
-        if name.startswith('_'):
+        if name.startswith("_"):
             continue
 
         if inspect.isclass(obj):
@@ -298,11 +276,7 @@ def get_public_members(module: Any) -> dict[str, list]:
             # Treat as constant/variable
             constants.append((name, obj))
 
-    return {
-        'classes': classes,
-        'functions': functions,
-        'constants': constants
-    }
+    return {"classes": classes, "functions": functions, "constants": constants}
 
 
 def generate_class_stub(cls: Any, class_name: str, imports: set[str]) -> str:
@@ -310,8 +284,8 @@ def generate_class_stub(cls: Any, class_name: str, imports: set[str]) -> str:
     lines = [f"class {class_name}:"]
 
     # Add docstring if available
-    if hasattr(cls, '__doc__') and cls.__doc__:
-        first_line = cls.__doc__.strip().split('\n')[0]
+    if hasattr(cls, "__doc__") and cls.__doc__:
+        first_line = cls.__doc__.strip().split("\n")[0]
         if first_line:
             lines.append(f'    """{first_line}"""')
 
@@ -321,17 +295,17 @@ def generate_class_stub(cls: Any, class_name: str, imports: set[str]) -> str:
 
     # Get methods defined directly in the class dict (not inherited)
     class_dict_methods = set()
-    if hasattr(cls, '__dict__'):
+    if hasattr(cls, "__dict__"):
         class_dict_methods = set(cls.__dict__.keys())
 
     for name, member in inspect.getmembers(cls):
         # Include dunder methods (like __getitem__, __add__, etc.) but exclude most private methods
-        if name.startswith('_') and not (name.startswith('__') and name.endswith('__')):
+        if name.startswith("_") and not (name.startswith("__") and name.endswith("__")):
             continue
 
         if callable(member) and not inspect.isdatadescriptor(member):
             # For dunder methods, be more selective - only include common ones that are likely user-defined
-            if name.startswith('__') and name.endswith('__'):
+            if name.startswith("__") and name.endswith("__"):
                 # Use global definition of dunder methods
                 if name in COMMON_DUNDER_METHODS_SET and name in class_dict_methods:
                     method_stub = generate_method_stub(member, name, imports)
@@ -343,13 +317,13 @@ def generate_class_stub(cls: Any, class_name: str, imports: set[str]) -> str:
                 if name in class_dict_methods:
                     should_include = True
                 # For Cython methods, check module match
-                elif hasattr(member, '__module__') and member.__module__ == cls.__module__:
+                elif hasattr(member, "__module__") and member.__module__ == cls.__module__:
                     should_include = True
 
                 if should_include:
                     method_stub = generate_method_stub(member, name, imports)
                     methods.append(method_stub)
-        elif inspect.isdatadescriptor(member) and not name.startswith('_'):
+        elif inspect.isdatadescriptor(member) and not name.startswith("_"):
             prop_stub = f"    {name}: Any"
             properties.append(prop_stub)
 
@@ -363,11 +337,11 @@ def generate_class_stub(cls: Any, class_name: str, imports: set[str]) -> str:
         # Use global ordered list for sorting
         def method_sort_key(method_line):
             # Extract method name from the line (e.g., "    def __init__(..." -> "__init__")
-            method_name = method_line.strip().split('(')[0].split()[-1]
+            method_name = method_line.strip().split("(")[0].split()[-1]
 
             if method_name in COMMON_DUNDER_METHODS_ORDERED:
                 return (0, COMMON_DUNDER_METHODS_ORDERED.index(method_name))  # Dunder methods in defined order
-            elif method_name.startswith('__') and method_name.endswith('__'):
+            elif method_name.startswith("__") and method_name.endswith("__"):
                 return (1, method_name)  # Other dunder methods (alphabetical)
             else:
                 return (2, method_name)  # Regular methods (alphabetical)
@@ -404,7 +378,7 @@ def generate_method_stub(method: Any, method_name: str, imports: set[str]) -> st
 
     except (ValueError, TypeError):
         # Fallback for built-in methods or methods without signature
-        if method_name == '__init__':
+        if method_name == "__init__":
             return f"    def {method_name}(self, *args: Any, **kwargs: Any) -> None: ..."
         else:
             return f"    def {method_name}(self, *args: Any, **kwargs: Any) -> Any: ..."

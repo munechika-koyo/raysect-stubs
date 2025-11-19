@@ -1,3 +1,7 @@
-"""Type stubs for the Raysect ray tracing library."""
+"""Type stubs for raysect"""
 
-__version__: str
+from typing import Any
+
+commit_id: Any
+version: str
+version_tuple: Any
