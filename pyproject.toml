@@ -62,6 +62,7 @@ enableReachabilityAnalysis = false
 # === Lint & Format settings ===
 # ------------------------------
 [tool.ruff]
+line-length = 200
 include = ["*.py", "*.pyi"]
 
 [tool.ruff.format]
