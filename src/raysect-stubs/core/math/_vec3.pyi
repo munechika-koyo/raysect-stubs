@@ -1,6 +1,6 @@
 """Type stubs for raysect.core.math._vec3"""
 
-from typing import Iterator
+from collections.abc import Iterator
 
 # No public API detected - may need manual inspection
 class _Vec3:
