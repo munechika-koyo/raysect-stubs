@@ -13,7 +13,65 @@ import pkgutil
 import importlib
 import argparse
 from pathlib import Path
-from typing import Any, Dict, List, Set
+from typing import Any
+
+
+# Dunder methods actually defined in Raysect source code (.pyx/.pxd files)
+# Categorized by functionality - order preserved for stub generation
+COMMON_DUNDER_METHODS_ORDERED = [
+    # Object construction and destruction
+    '__init__',      # Object initialization
+    '__cinit__',     # Cython constructor
+    '__dealloc__',   # Cython destructor
+
+    # String representation and conversion
+    '__repr__',      # Developer string representation
+    '__str__',       # User string representation
+
+    # Arithmetic operations (binary)
+    '__add__',       # Addition: a + b
+    '__radd__',      # Right addition: b + a
+    '__sub__',       # Subtraction: a - b
+    '__rsub__',      # Right subtraction: b - a
+    '__mul__',       # Multiplication: a * b
+    '__rmul__',      # Right multiplication: b * a
+    '__truediv__',   # True division: a / b
+    '__rtruediv__',  # Right true division: b / a
+    '__mod__',       # Modulo: a % b
+    '__rmod__',      # Right modulo: b % a
+    '__pow__',       # Power: a ** b
+    '__rpow__',      # Right power: b ** a
+
+    # Arithmetic operations (unary)
+    '__neg__',       # Unary negation: -a
+    '__abs__',       # Absolute value: abs(a)
+
+    # Comparison operations
+    '__richcmp__',   # Cython rich comparison method
+    '__eq__',        # Equality: a == b
+    '__ne__',        # Inequality: a != b
+    '__lt__',        # Less than: a < b
+    '__le__',        # Less or equal: a <= b
+    '__gt__',        # Greater than: a > b
+    '__ge__',        # Greater or equal: a >= b
+
+    # Sequence/container protocols
+    '__getitem__',   # Item access: a[key]
+    '__setitem__',   # Item assignment: a[key] = value
+    '__iter__',      # Iteration: for x in a
+    '__len__',       # Length: len(a)
+
+    # Callable protocol
+    '__call__',      # Function call: a()
+
+    # Serialization support (pickling)
+    '__getstate__',  # Get object state for pickling
+    '__setstate__',  # Restore object state from pickling
+    '__reduce__',    # Reduce for pickling
+]
+
+# Create a set for quick lookup
+COMMON_DUNDER_METHODS_SET = set(COMMON_DUNDER_METHODS_ORDERED)
 
 
 def main():
@@ -88,7 +146,7 @@ def main():
     print("Note: Type annotations may need manual refinement.")
 
 
-def discover_modules() -> List[str]:
+def discover_modules() -> list[str]:
     """Discover all non-test modules in raysect package."""
     import raysect
 
@@ -220,7 +278,7 @@ def generate_stub_content(module: Any, module_name: str) -> str:
     return "\n".join(lines)
 
 
-def get_public_members(module: Any) -> Dict[str, List]:
+def get_public_members(module: Any) -> dict[str, list]:
     """Extract public members from a module."""
     classes = []
     functions = []
@@ -247,7 +305,7 @@ def get_public_members(module: Any) -> Dict[str, List]:
     }
 
 
-def generate_class_stub(cls: Any, class_name: str, imports: Set[str]) -> str:
+def generate_class_stub(cls: Any, class_name: str, imports: set[str]) -> str:
     """Generate stub for a class."""
     lines = [f"class {class_name}:"]
 
@@ -261,14 +319,36 @@ def generate_class_stub(cls: Any, class_name: str, imports: Set[str]) -> str:
     methods = []
     properties = []
 
+    # Get methods defined directly in the class dict (not inherited)
+    class_dict_methods = set()
+    if hasattr(cls, '__dict__'):
+        class_dict_methods = set(cls.__dict__.keys())
+
     for name, member in inspect.getmembers(cls):
-        if name.startswith('_') and name not in ('__init__', '__new__'):
+        # Include dunder methods (like __getitem__, __add__, etc.) but exclude most private methods
+        if name.startswith('_') and not (name.startswith('__') and name.endswith('__')):
             continue
 
         if callable(member) and not inspect.isdatadescriptor(member):
-            # This catches methods, functions, and Cython functions
-            method_stub = generate_method_stub(member, name, imports)
-            methods.append(method_stub)
+            # For dunder methods, be more selective - only include common ones that are likely user-defined
+            if name.startswith('__') and name.endswith('__'):
+                # Use global definition of dunder methods
+                if name in COMMON_DUNDER_METHODS_SET and name in class_dict_methods:
+                    method_stub = generate_method_stub(member, name, imports)
+                    methods.append(method_stub)
+            # For non-dunder methods, include if they're defined in this class or module
+            else:
+                should_include = False
+                # Check if method is in class dict (defined directly in class)
+                if name in class_dict_methods:
+                    should_include = True
+                # For Cython methods, check module match
+                elif hasattr(member, '__module__') and member.__module__ == cls.__module__:
+                    should_include = True
+
+                if should_include:
+                    method_stub = generate_method_stub(member, name, imports)
+                    methods.append(method_stub)
         elif inspect.isdatadescriptor(member) and not name.startswith('_'):
             prop_stub = f"    {name}: Any"
             properties.append(prop_stub)
@@ -278,8 +358,21 @@ def generate_class_stub(cls: Any, class_name: str, imports: Set[str]) -> str:
         lines.extend(properties)
         lines.append("")
 
-    # Add methods
+    # Add methods (sorted by dunder method order, then regular methods)
     if methods:
+        # Use global ordered list for sorting
+        def method_sort_key(method_line):
+            # Extract method name from the line (e.g., "    def __init__(..." -> "__init__")
+            method_name = method_line.strip().split('(')[0].split()[-1]
+
+            if method_name in COMMON_DUNDER_METHODS_ORDERED:
+                return (0, COMMON_DUNDER_METHODS_ORDERED.index(method_name))  # Dunder methods in defined order
+            elif method_name.startswith('__') and method_name.endswith('__'):
+                return (1, method_name)  # Other dunder methods (alphabetical)
+            else:
+                return (2, method_name)  # Regular methods (alphabetical)
+
+        methods.sort(key=method_sort_key)
         lines.extend(methods)
 
     # If no methods found, add pass
@@ -290,7 +383,7 @@ def generate_class_stub(cls: Any, class_name: str, imports: Set[str]) -> str:
     return "\n".join(lines)
 
 
-def generate_method_stub(method: Any, method_name: str, imports: Set[str]) -> str:
+def generate_method_stub(method: Any, method_name: str, imports: set[str]) -> str:
     """Generate stub for a method."""
     try:
         # Try to get signature
@@ -317,7 +410,7 @@ def generate_method_stub(method: Any, method_name: str, imports: Set[str]) -> st
             return f"    def {method_name}(self, *args: Any, **kwargs: Any) -> Any: ..."
 
 
-def generate_function_stub(func: Any, func_name: str, imports: Set[str]) -> str:
+def generate_function_stub(func: Any, func_name: str, imports: set[str]) -> str:
     """Generate stub for a function."""
     try:
         sig = inspect.signature(func)
@@ -339,7 +432,7 @@ def generate_function_stub(func: Any, func_name: str, imports: Set[str]) -> str:
         return f"def {func_name}(*args: Any, **kwargs: Any) -> Any: ..."
 
 
-def generate_constant_stub(name: str, obj: Any, imports: Set[str]) -> str:
+def generate_constant_stub(name: str, obj: Any, imports: set[str]) -> str:
     """Generate stub for a constant."""
     # Try to infer type from value
     if isinstance(obj, (int, float)):
