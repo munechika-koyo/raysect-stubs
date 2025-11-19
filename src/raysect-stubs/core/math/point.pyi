@@ -2,8 +2,8 @@
 
 from collections.abc import Iterator
 
-from raysect.core.math.vector import Vector2D, Vector3D
 from raysect.core.math.affinematrix import AffineMatrix3D
+from raysect.core.math.vector import Vector2D, Vector3D
 
 class Point2D:
     """Represents a point in 2D affine space."""
@@ -11,7 +11,7 @@ class Point2D:
     x: float
     y: float
 
-    def __init__(self, x: float = ..., y: float =...) -> None: ...
+    def __init__(self, x: float = ..., y: float = ...) -> None: ...
     def __repr__(self) -> str: ...
     def __richcmp__(self, other: object, op: int) -> bool: ...
     def __add__(self, y: object) -> Vector2D: ...

@@ -5,6 +5,7 @@ from collections.abc import Iterator
 # No public API detected - may need manual inspection
 class _Vec3:
     """Base class for 3D vector types."""
+
     x: float
     y: float
     z: float
