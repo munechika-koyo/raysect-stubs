@@ -1,21 +1,46 @@
-"""Type stubs for raysect.core.math._vec3"""
-
 from collections.abc import Iterator
 
-# No public API detected - may need manual inspection
 class _Vec3:
-    """Base class for 3D vector types."""
+    """3D Vector base class."""
 
+    length: float
     x: float
     y: float
     z: float
-    def __init__(self, x: float = ..., y: float = ..., z: float = ...) -> None: ...
-    def __getitem__(self, i: int) -> float: ...
-    def __setitem__(self, i: int, value: float) -> None: ...
-    def __iter__(self) -> Iterator[float]: ...
-    def __getstate__(self) -> tuple[float, float, float]: ...
-    def __setstate__(self, state: object) -> None: ...
-    @property
-    def length(self) -> float: ...
-    def dot(self, v: _Vec3) -> float: ...
-    def angle(self, v: _Vec3) -> float: ...
+    def __init__(self, x: float = 0.0, y: float = 0.0, z: float = 1.0) -> None:
+        """
+        Constructor.
+
+        If no initial values are passed, _Vec3 defaults to a unit vector
+        aligned with the z-axis: _Vec(0.0, 0.0, 1.0)
+        """
+    def __getitem__(self, index: int) -> float:
+        """Returns the vector coordinates by index ([0,1,2] -> [x,y,z])."""
+    def __setitem__(self, index: int, object: float) -> None:
+        """Sets the vector coordinates by index ([0,1,2] -> [x,y,z])."""
+    def __iter__(self) -> Iterator[float]:
+        """Implement iter(self)."""
+    def angle(self, b: _Vec3) -> float:
+        """
+        Calculates the angle between this vector and the supplied vector.
+
+        Returns the angle in degrees.
+
+            >>> a = Vector3D(1, 1, 1)
+            >>> b = Vector3D(1, 0, 0)
+            >>> a.angle(b)
+            54.735610317245346
+        """
+    def dot(self, b: _Vec3) -> float:
+        """
+        Calculates the dot product between this vector and the supplied vector.
+
+        :rtype: float
+
+        .. code-block:: pycon
+
+            >>> a = Vector3D(1, 1, 1)
+            >>> b = Vector3D(1, 0, 0)
+            >>> a.dot(b)
+            1.0
+        """
