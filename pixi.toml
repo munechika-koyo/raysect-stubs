@@ -28,11 +28,34 @@ hatch-vcs = "*"
 raysect-stubs = { path = "." }
 raysect = "*"
 pytest = "*"
+mypy = "*"
 
 [tasks]
 # Testing and type checking
 test = "pytest tests/"
 type-check = "mypy raysect-stubs/"
+
+# Type stub generation
+typegen = { cmd = [
+  "stubgen",
+  "-p",
+  "raysect",
+  "-o",
+  "stubgen_temp",
+  "--ignore-errors",
+  "--include-private",
+  "--include-docstrings",
+], description = "📝 Generate type stubs for raysect" }
+
+typegen-update = { cmd = [
+  "rm",
+  "-rf",
+  "src/raysect-stubs/*",
+  "&&",
+  "mv",
+  "stubgen_temp/raysect/*",
+  "src/raysect-stubs/",
+], description = "📝 Update type stubs for raysect" }
 
 # === Linting feature ===
 [feature.lint.dependencies]
