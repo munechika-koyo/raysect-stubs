@@ -29,7 +29,7 @@ class Vector2D:
 
     x: float
     y: float
-    def __init__(self, x: float = 0.0, y: float = 0.0) -> None:
+    def __init__(self, x: float = 1.0, y: float = 0.0) -> None:
         """Initialize self.  See help(type(self)) for accurate signature."""
     def __repr__(self) -> str:
         """Returns a string representation of the Vector2D object."""
@@ -221,7 +221,7 @@ class Vector3D(_Vec3):
         >>> a = Vector3D(1, 0, 0)
     """
 
-    def __init__(self, x: float = 0.0, y: float = 0.0, z: float = 0.0) -> None: ...
+    def __init__(self, x: float = 0.0, y: float = 0.0, z: float = 1.0) -> None: ...
     def __repr__(self) -> str:
         """Returns a string representation of the Vector3D object."""
     def __richcmp__(self, other: Vector3D, op: int) -> bool:
