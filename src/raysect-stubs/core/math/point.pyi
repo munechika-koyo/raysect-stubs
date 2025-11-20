@@ -1,7 +1,8 @@
 from collections.abc import Iterator
+
 from ._vec3 import _Vec3  # pyright: ignore[reportPrivateUsage]
-from .vector import Vector2D, Vector3D
 from .affinematrix import AffineMatrix3D
+from .vector import Vector2D, Vector3D
 
 class Point2D:
     """
