@@ -2,6 +2,7 @@ from collections.abc import Iterator
 
 class _Vec3:
     """3D Vector base class."""
+
     x: float
     y: float
     z: float
