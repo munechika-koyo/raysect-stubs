@@ -1,3 +1,19 @@
-"""Type stubs for raysect.primitive"""
-
-# No public API detected - may need manual inspection
+from .box import Box as Box
+from .cone import Cone as Cone
+from .csg import Intersect as Intersect
+from .csg import Subtract as Subtract
+from .csg import Union as Union
+from .cylinder import Cylinder as Cylinder
+from .mesh import Mesh as Mesh
+from .mesh import export_obj as export_obj
+from .mesh import export_ply as export_ply
+from .mesh import export_stl as export_stl
+from .mesh import export_vtk as export_vtk
+from .mesh import import_obj as import_obj
+from .mesh import import_ply as import_ply
+from .mesh import import_stl as import_stl
+from .mesh import import_vtk as import_vtk
+from .parabola import Parabola as Parabola
+from .sphere import Sphere as Sphere
+from .torus import Torus as Torus
+from .utility import EncapsulatedPrimitive as EncapsulatedPrimitive
