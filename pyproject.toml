@@ -80,6 +80,7 @@ select = [
 ]
 ignore = [
   "E501", # line too long, handled by formatter
+  "F403", # 'from module import *' used; unable to detect undefined names
 ]
 
 [tool.ruff.lint.isort]
