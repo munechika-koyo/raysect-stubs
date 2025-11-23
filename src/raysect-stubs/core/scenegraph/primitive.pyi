@@ -75,7 +75,7 @@ class Primitive(Node):
         :rtype: Intersection
         """
     @abstractmethod
-    def contains(self, p: Point3D) -> bool:
+    def contains(self, point: Point3D) -> bool:
         """
         Virtual method - to be implemented by derived classes.
 
