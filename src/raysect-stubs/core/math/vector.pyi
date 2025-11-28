@@ -1,5 +1,4 @@
 from collections.abc import Iterator
-from numbers import Real
 
 from ._vec3 import _Vec3  # pyright: ignore[reportPrivateUsage]
 from .affinematrix import AffineMatrix3D
@@ -85,21 +84,21 @@ class Vector2D:
             >>> Vector2D(1, 0) - Vector2D(0, 1)
             Vector2D(1.0, -1.0)
         """
-    def __mul__(self, other: Real) -> Vector2D:
+    def __mul__(self, other: float) -> Vector2D:
         """
         Multiplication operator.
 
             >>> Vector3D(1, 2) * 2
             Vector2D(2.0, 4.0)
         """
-    def __rmul__(self, other: Real) -> Vector2D:
+    def __rmul__(self, other: float) -> Vector2D:
         """
         Reverse multiplication operator.
 
             >>> 2 * Vector3D(1, 2)
             Vector2D(2.0, 4.0)
         """
-    def __truediv__(self, other: Real) -> Vector2D:
+    def __truediv__(self, other: float) -> Vector2D:
         """
         Division operator.
 
@@ -288,7 +287,7 @@ class Vector3D(_Vec3):
            >>> Vector3D(1, 0, 0) - Vector3D(0, 1, 0)
            Vector3D(1.0, -1.0, 0.0)
         """
-    def __mul__(self, y: Real) -> Vector3D:
+    def __mul__(self, y: float) -> Vector3D:
         """
         Multiplication operator.
 
@@ -298,7 +297,7 @@ class Vector3D(_Vec3):
             >>> Vector3D(1, 2, 3) * 2
             Vector3D(2.0, 4.0, 6.0)
         """
-    def __rmul__(self, x: Real) -> Vector3D:
+    def __rmul__(self, x: float) -> Vector3D:
         """
         Reverse multiplication operator.
 
@@ -310,7 +309,7 @@ class Vector3D(_Vec3):
             >>> rotate_x(90) * Vector3D(0, 0, 1)
             Vector3D(0.0, -1.0, 0.0)
         """
-    def __truediv__(self, y: Real) -> Vector3D:
+    def __truediv__(self, y: float) -> Vector3D:
         """Division operator.
 
         >>> Vector3D(1, 1, 1) / 2

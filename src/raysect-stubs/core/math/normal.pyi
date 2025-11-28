@@ -1,5 +1,3 @@
-from numbers import Real
-
 from ._vec3 import _Vec3  # pyright: ignore[reportPrivateUsage]
 from .affinematrix import AffineMatrix3D
 from .vector import Vector3D
@@ -44,11 +42,11 @@ class Normal3D(_Vec3):
         """Subtract operator."""
     def __rsub__(self, x: _Vec3) -> Normal3D:
         """Reverse subtract operator."""
-    def __mul__(self, y: Real) -> Normal3D:
+    def __mul__(self, y: float) -> Normal3D:
         """Multiply operator."""
-    def __rmul__(self, x: Real | AffineMatrix3D) -> Normal3D:
+    def __rmul__(self, x: float | AffineMatrix3D) -> Normal3D:
         """Reverse multiply operator."""
-    def __truediv__(self, y: Real) -> Normal3D:
+    def __truediv__(self, y: float) -> Normal3D:
         """Division operator."""
     def cross(self, v: _Vec3) -> Vector3D:
         """
