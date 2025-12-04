@@ -60,7 +60,7 @@ typegen-update = { cmd = [
 # === Linting feature ===
 [feature.lint.dependencies]
 dprint = "*"
-lefthook = "*"
+lefthook = "<2.0.5"
 ruff = "*"
 typos = "*"
 mypy = "*"
