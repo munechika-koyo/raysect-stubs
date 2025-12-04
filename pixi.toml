@@ -76,7 +76,7 @@ lefthook = { cmd = "lefthook", description = "🔗 Run lefthook" }
 hooks = { cmd = "lefthook install", description = "🔗 Install pre-commit hooks" }
 pre-commit = { cmd = "lefthook run pre-commit", description = "🔗 Run pre-commit checks" }
 mypy = { cmd = "mypy", description = "Type check with mypy" }
-pyrefly = { cmd = "pyrefly check", description = "Type check with pyrefly" }
+pyrefly-check = { cmd = "pyrefly check", description = "Type check with pyrefly" }
 ruff-check = { cmd = "ruff check --fix", description = "Lint with ruff" }
 ruff-format = { cmd = "ruff format", description = "Format with ruff" }
 dprint = { cmd = "dprint fmt", description = "Format with dprint" }
