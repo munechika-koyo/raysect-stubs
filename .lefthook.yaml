@@ -43,7 +43,7 @@ pre-commit:
 
     # - name: pyrefly
     #   glob: "*.{py,pyi}"
-    #   run: pixi {run} pyrefly check {staged_files}
+    #   run: pixi {run} pyrefly-check check {staged_files}
 
     # - name: mypy
     #   glob: "*.{py,pyi}"
