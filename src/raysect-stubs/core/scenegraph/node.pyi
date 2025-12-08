@@ -27,7 +27,7 @@ class Node(_NodeBase):
 
     def __init__(self, parent: Node | None = None, transform: AffineMatrix3D | None = None, name: str | None = None) -> None: ...
     @property
-    def parent(self) -> Node | None:
+    def parent(self) -> Node:
         """
         The parent of this node in the scenegraph.
 
@@ -45,7 +45,7 @@ class Node(_NodeBase):
     @transform.setter
     def transform(self, value: AffineMatrix3D) -> None: ...
     @property
-    def name(self) -> str | None:
+    def name(self) -> str:
         """
         The name of this node.
 
