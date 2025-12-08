@@ -43,7 +43,6 @@ source = "vcs"
 # ----------------------------
 [tool.hatch.build.targets.wheel]
 packages = ["src/raysect-stubs"]
-artifacts = ["*.pyi", "py.typed"]
 
 # ------------------------------
 # === Type checking settings ===
