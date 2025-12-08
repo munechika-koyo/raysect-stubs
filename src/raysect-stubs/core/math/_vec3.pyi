@@ -32,6 +32,8 @@ class _Vec3:
             >>> a.length
             1.7320508075688772
         """
+    @length.setter
+    def length(self, value: float) -> None: ...
     def dot(self, b: _Vec3) -> float:
         """
         Calculates the dot product between this vector and the supplied vector.

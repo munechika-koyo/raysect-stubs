@@ -43,6 +43,8 @@ class Box(Primitive):
 
         :rtype: Point3D
         """
+    @lower.setter
+    def lower(self, value: Point3D) -> None: ...
     @property
     def upper(self) -> Point3D:
         """
@@ -50,6 +52,8 @@ class Box(Primitive):
 
         :rtype: Point3D
         """
+    @upper.setter
+    def upper(self, value: Point3D) -> None: ...
     def hit(self, ray: Ray) -> Intersection: ...
     def next_intersection(self) -> Intersection: ...
     def contains(self, point: Point3D) -> bool: ...

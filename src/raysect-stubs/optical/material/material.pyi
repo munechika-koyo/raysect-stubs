@@ -24,6 +24,8 @@ class Material(CoreMaterial):
 
         :rtype: float
         """
+    @importance.setter
+    def importance(self, value: float) -> None: ...
     @abstractmethod
     def evaluate_surface(
         self,

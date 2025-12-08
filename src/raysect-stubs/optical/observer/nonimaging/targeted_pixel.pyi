@@ -81,6 +81,8 @@ class TargetedPixel(Observer0D):
 
         :rtype: float
         """
+    @x_width.setter
+    def x_width(self, value: float) -> None: ...
     @property
     def y_width(self) -> float:
         """
@@ -88,6 +90,8 @@ class TargetedPixel(Observer0D):
 
         :rtype: float
         """
+    @y_width.setter
+    def y_width(self, value: float) -> None: ...
     @property
     def collection_area(self) -> float:
         """
@@ -116,6 +120,8 @@ class TargetedPixel(Observer0D):
 
         :rtype: list
         """
+    @targets.setter
+    def targets(self, value: list[Primitive]) -> None: ...
     @property
     def targeted_path_prob(self) -> float:
         """
@@ -128,5 +134,7 @@ class TargetedPixel(Observer0D):
 
         :rtype: float
         """
+    @targeted_path_prob.setter
+    def targeted_path_prob(self, value: float) -> None: ...
     def _generate_rays(self, template: Ray, ray_count: int) -> list[tuple[Ray, float]]: ...
     def _pixel_sensitivity(self) -> float: ...

@@ -33,6 +33,8 @@ class Node(_NodeBase):
 
         :rtype: Node
         """
+    @parent.setter
+    def parent(self, value: Node | None) -> None: ...
     @property
     def transform(self) -> AffineMatrix3D:
         """
@@ -40,6 +42,8 @@ class Node(_NodeBase):
 
         :rtype: AffineMatrix3D
         """
+    @transform.setter
+    def transform(self, value: AffineMatrix3D) -> None: ...
     @property
     def name(self) -> str | None:
         """
@@ -47,6 +51,8 @@ class Node(_NodeBase):
 
         :rtype: str
         """
+    @name.setter
+    def name(self, value: str | None) -> None: ...
     def to(self, node: _NodeBase) -> AffineMatrix3D:
         """
         Returns an affine transform that, when applied to a vector or point,

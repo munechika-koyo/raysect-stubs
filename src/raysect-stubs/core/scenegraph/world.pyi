@@ -23,6 +23,8 @@ class World(_NodeBase):
         """
         The acceleration structure used for this world's scene-graph.
         """
+    @accelerator.setter
+    def accelerator(self, value: KDTree) -> None: ...
     @property
     def name(self) -> str:
         """
@@ -30,6 +32,8 @@ class World(_NodeBase):
 
         :rtype: str
         """
+    @name.setter
+    def name(self, value: str) -> None: ...
     @property
     def primitives(self) -> list[Primitive]:
         """

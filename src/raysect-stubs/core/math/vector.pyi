@@ -119,6 +119,8 @@ class Vector2D:
             1.4142135623730951
 
         """
+    @length.setter
+    def length(self, value: float) -> None: ...
     def dot(self, b: Vector2D) -> float:
         """
         Calculates the dot product between this vector and the supplied vector.

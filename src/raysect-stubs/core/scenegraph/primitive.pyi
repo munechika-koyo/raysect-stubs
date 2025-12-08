@@ -32,6 +32,8 @@ class Primitive(Node):
 
         :rtype: Material
         """
+    @material.setter
+    def material(self, value: Material) -> None: ...
     @abstractmethod
     def hit(self, ray: Ray) -> Intersection:
         """

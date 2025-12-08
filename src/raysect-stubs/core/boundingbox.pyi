@@ -19,6 +19,8 @@ class BoundingBox2D:
 
         :rtype: Point2D
         """
+    @lower.setter
+    def lower(self, value: Point2D) -> None: ...
     @property
     def upper(self) -> Point2D:
         """
@@ -26,6 +28,8 @@ class BoundingBox2D:
 
         :rtype: Point2D
         """
+    @upper.setter
+    def upper(self, value: Point2D) -> None: ...
     def contains(self, point: Point2D) -> bool:
         """
         Returns true if the given 2D point lies inside the bounding box.
@@ -136,6 +140,8 @@ class BoundingBox3D:
 
         :rtype: Point3D
         """
+    @lower.setter
+    def lower(self, value: Point3D) -> None: ...
     @property
     def upper(self) -> Point3D:
         """
@@ -143,8 +149,10 @@ class BoundingBox3D:
 
         :rtype: Point3D
         """
+    @upper.setter
+    def upper(self, value: Point3D) -> None: ...
     @property
-    def center(self) -> Point3D:
+    def centre(self) -> Point3D:
         """
         The point defining the geometric centre of the bounding box.
 

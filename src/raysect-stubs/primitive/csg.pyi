@@ -38,6 +38,8 @@ class CSGPrimitive(Primitive):
 
         :rtype: Primitive
         """
+    @primitive_a.setter
+    def primitive_a(self, value: Primitive) -> None: ...
     @property
     def primitive_b(self) -> Primitive:
         """
@@ -45,8 +47,10 @@ class CSGPrimitive(Primitive):
 
         :rtype: Primitive
         """
+    @primitive_b.setter
+    def primitive_b(self, value: Primitive) -> None: ...
     def hit(self, ray: Ray) -> Intersection: ...
-    def next_intersection(selfs) -> Intersection: ...
+    def next_intersection(self) -> Intersection: ...
 
 class NullPrimitive(Primitive):
     """

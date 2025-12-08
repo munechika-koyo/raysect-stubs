@@ -21,6 +21,8 @@ class BoundingSphere3D:
 
         :rtype: Point3D
         """
+    @centre.setter
+    def centre(self, value: Point3D) -> None: ...
     @property
     def radius(self) -> float:
         """
@@ -28,6 +30,8 @@ class BoundingSphere3D:
 
         :rtype: float
         """
+    @radius.setter
+    def radius(self, value: float) -> None: ...
     def hit(self, ray: Ray) -> bool:
         """
         Returns true if the ray hits the bounding box.
