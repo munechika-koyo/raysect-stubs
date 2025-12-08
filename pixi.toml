@@ -21,6 +21,9 @@ python = ">=3.10"
 hatchling = "*"
 hatch-vcs = "*"
 
+[package.run-dependencies]
+numpy = "*"
+
 # ---------------------------------
 # === Development Configuration ===
 # ---------------------------------
