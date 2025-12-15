@@ -1,10 +1,9 @@
 from abc import abstractmethod
 
-from ....core import Primitive, Ray
+from ....core import Primitive
 from ....core.math import AffineMatrix3D, Point3D, Vector3D
+from ... import Ray, Spectrum, World
 from ...material.material import NullSurface
-from ...scenegraph import World
-from ...spectrum import Spectrum
 
 class VolumeIntegrator:
     """
@@ -98,7 +97,15 @@ class InhomogeneousVolumeEmitter(NullSurface):
 
     def __init__(self, integrator: VolumeIntegrator | None = None) -> None: ...
     def evaluate_volume(
-        self, spectrum: Spectrum, world: World, ray: Ray, primitive: Primitive, start_point: Point3D, end_point: Point3D, world_to_primitive: AffineMatrix3D, primitive_to_world: AffineMatrix3D
+        self,
+        spectrum: Spectrum,
+        world: World,
+        ray: Ray,
+        primitive: Primitive,
+        start_point: Point3D,
+        end_point: Point3D,
+        world_to_primitive: AffineMatrix3D,
+        primitive_to_world: AffineMatrix3D,
     ) -> Spectrum: ...
     def emission_function(
         self,
