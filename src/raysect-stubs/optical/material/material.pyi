@@ -63,18 +63,7 @@ class Material(CoreMaterial):
         """
     @abstractmethod
     def evaluate_volume(
-        self,
-        world: World,
-        ray: Ray,
-        primitive: Primitive,
-        hit_point: Point3D,
-        exiting: bool,
-        inside_point: Point3D,
-        outside_point: Point3D,
-        normal: Normal3D,
-        world_to_primitive: AffineMatrix3D,
-        primitive_to_world: AffineMatrix3D,
-        intersection: Intersection,
+        self, spectrum: Spectrum, world: World, ray: Ray, primitive: Primitive, start_point: Point3D, end_point: Point3D, world_to_primitive: AffineMatrix3D, primitive_to_world: AffineMatrix3D
     ) -> Spectrum:
         """
         Virtual method for evaluating the spectrum emitted/absorbed along the rays trajectory
@@ -128,18 +117,7 @@ class NullVolume(Material):
     implemented by the deriving class.
     """
     def evaluate_volume(
-        self,
-        world: World,
-        ray: Ray,
-        primitive: Primitive,
-        hit_point: Point3D,
-        exiting: bool,
-        inside_point: Point3D,
-        outside_point: Point3D,
-        normal: Normal3D,
-        world_to_primitive: AffineMatrix3D,
-        primitive_to_world: AffineMatrix3D,
-        intersection: Intersection,
+        self, spectrum: Spectrum, world: World, ray: Ray, primitive: Primitive, start_point: Point3D, end_point: Point3D, world_to_primitive: AffineMatrix3D, primitive_to_world: AffineMatrix3D
     ) -> Spectrum: ...
 
 class NullMaterial(Material):
@@ -165,18 +143,7 @@ class NullMaterial(Material):
         intersection: Intersection,
     ) -> Spectrum: ...
     def evaluate_volume(
-        self,
-        world: World,
-        ray: Ray,
-        primitive: Primitive,
-        hit_point: Point3D,
-        exiting: bool,
-        inside_point: Point3D,
-        outside_point: Point3D,
-        normal: Normal3D,
-        world_to_primitive: AffineMatrix3D,
-        primitive_to_world: AffineMatrix3D,
-        intersection: Intersection,
+        self, spectrum: Spectrum, world: World, ray: Ray, primitive: Primitive, start_point: Point3D, end_point: Point3D, world_to_primitive: AffineMatrix3D, primitive_to_world: AffineMatrix3D
     ) -> Spectrum: ...
 
 class DiscreteBSDF(Material):
