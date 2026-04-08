@@ -1,5 +1,5 @@
 [workspace]
-channels = ["https://prefix.dev/conda-forge"]
+channels = ["conda-forge"]
 platforms = ["linux-64", "osx-64", "osx-arm64"]
 preview = ["pixi-build"]
 
@@ -32,6 +32,7 @@ raysect-stubs = { path = "." }
 raysect = "*"
 pytest = "*"
 mypy = "*"
+ipython = ">=8.37.0,<10"
 
 [tasks]
 # Testing and type checking
@@ -49,16 +50,6 @@ typegen = { cmd = [
   "--include-private",
   "--include-docstrings",
 ], description = "📝 Generate type stubs for raysect" }
-
-typegen-update = { cmd = [
-  "rm",
-  "-rf",
-  "src/raysect-stubs/*",
-  "&&",
-  "mv",
-  "stubgen_temp/raysect/*",
-  "src/raysect-stubs/",
-], description = "📝 Update type stubs for raysect" }
 
 # === Linting feature ===
 [feature.lint.dependencies]
@@ -90,14 +81,28 @@ blacken-docs = { cmd = "blacken-docs", description = "Format Python markdown blo
 validate-pyproject = { cmd = "validate-pyproject pyproject.toml", description = "Validate pyproject.toml" }
 lint = { cmd = "lefthook run pre-commit --all-files --force", description = "🧹 Run all linters" }
 
+[feature.tools.tasks]
+typegen-update = { cmd = [
+  "rm",
+  "-rf",
+  "src/raysect-stubs/*",
+  "&&",
+  "mv",
+  "stubgen_temp/raysect/*",
+  "src/raysect-stubs/",
+], description = "📝 Update type stubs for raysect" }
+
 # === Python environment features ===
-[feature.py310.dependencies]
+[feature.py-oldest.dependencies]
 python = "3.10.*"
-[feature.py313.dependencies]
+[feature.py-latest.dependencies]
 python = "3.13.*"
 
 [environments]
-default = { features = ["py313"], solve-group = "py313" }
-py313 = { features = ["py313"], solve-group = "py313" }   # alias of test
-py310 = { features = ["py310"], solve-group = "py310" }
-lint = { features = ["lint"], no-default-feature = true }
+default = { features = ["py-latest"], solve-group = "py-latest" }
+py-latest = { features = [
+  "py-latest",
+], solve-group = "py-latest" } # alias of test
+py-oldest = { features = ["py-oldest"], solve-group = "py-oldest" }
+lint = ["lint", "default"]
+tools = { features = ["tools"], no-default-feature = true }
