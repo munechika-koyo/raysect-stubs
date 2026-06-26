@@ -1,5 +1,5 @@
 from ..math.affinematrix import AffineMatrix3D
-from ._nodebase import _NodeBase  # pyright: ignore[reportPrivateUsage]
+from ._nodebase import _NodeBase
 
 class Node(_NodeBase):
     """
@@ -22,19 +22,24 @@ class Node(_NodeBase):
     :ivar list children: A list of child nodes for which this node is the parent.
     :ivar dict meta: A dictionary for the storage of any extra user specified meta data.
     :ivar Node root: A reference to the root node of this node's scene-graph
-      (i.e. the parent of all parents.
+      (i.e. the parent of all parents).
     """
 
-    def __init__(self, parent: Node | None = None, transform: AffineMatrix3D | None = None, name: str | None = None) -> None: ...
+    def __init__(
+        self,
+        parent: _NodeBase | None = None,
+        transform: AffineMatrix3D | None = None,
+        name: str | None = None,
+    ) -> None: ...
     @property
-    def parent(self) -> Node:
+    def parent(self) -> _NodeBase:
         """
         The parent of this node in the scenegraph.
 
         :rtype: Node
         """
     @parent.setter
-    def parent(self, value: Node | None) -> None: ...
+    def parent(self, value: _NodeBase | None) -> None: ...
     @property
     def transform(self) -> AffineMatrix3D:
         """
