@@ -1,0 +1,2 @@
+# Test files
+raysect\.((_|\w)+\.)+(__test__|test|tests(\..+)?)
