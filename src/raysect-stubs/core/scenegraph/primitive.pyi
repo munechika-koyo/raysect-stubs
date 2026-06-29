@@ -35,7 +35,7 @@ class Primitive(Node):
     @material.setter
     def material(self, value: Material) -> None: ...
     @abstractmethod
-    def hit(self, ray: Ray) -> Intersection:
+    def hit(self, ray: Ray) -> Intersection | None:
         """
         Virtual method - to be implemented by derived classes.
 
