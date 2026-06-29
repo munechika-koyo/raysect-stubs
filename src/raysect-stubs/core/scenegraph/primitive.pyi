@@ -52,7 +52,7 @@ class Primitive(Node):
         :rtype: Intersection
         """
     @abstractmethod
-    def next_intersection(self) -> Intersection:
+    def next_intersection(self) -> Intersection | None:
         """
         Virtual method - to be implemented by derived classes.
 
