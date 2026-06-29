@@ -12,15 +12,10 @@ class _NodeBase:
     node objects.
     """
 
-    _name: str | None
-    _parent: _NodeBase | None
     children: list[_NodeBase]
     root: _NodeBase
-    _transform: AffineMatrix3D
     _root_transform: AffineMatrix3D
     _root_transform_inverse: AffineMatrix3D
-    _tract_modifications: bool
-
     meta: dict[Any, Any]
 
     def __init__(self, name: str | None = None) -> None: ...

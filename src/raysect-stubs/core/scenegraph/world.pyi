@@ -2,7 +2,7 @@ from ..acceleration.kdtree import KDTree
 from ..intersection import Intersection
 from ..math import AffineMatrix3D, Point3D
 from ..ray import Ray
-from ._nodebase import _NodeBase  # pyright: ignore[reportPrivateUsage]
+from ._nodebase import _NodeBase
 from .observer import Observer
 from .primitive import Primitive
 from .signal import ChangeSignal
