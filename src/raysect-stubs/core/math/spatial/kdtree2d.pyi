@@ -1,7 +1,6 @@
 from abc import abstractmethod
-from typing import BinaryIO
 
-from _typeshed import StrOrBytesPath
+from _typeshed import StrOrBytesPath, SupportsRead, SupportsWrite
 
 from ...boundingbox import BoundingBox2D
 from ...math import Point2D
@@ -42,7 +41,14 @@ class KDTree2DCore:
     """
 
     bounds: BoundingBox2D
-    def __init__(self, items: list[Item2D], max_depth: int = 0, min_items: int = 1, hit_cost: float = 20.0, empty_bonux: float = 0.2) -> None: ...
+    def __init__(
+        self,
+        items: list[Item2D],
+        max_depth: int = 0,
+        min_items: int = 1,
+        hit_cost: float = 20.0,
+        empty_bonus: float = 0.2,
+    ) -> None: ...
     def is_contained(self, point: Point2D) -> bool:
         """
         Traverses the kd-Tree to identify if the point is contained by an any item.
@@ -61,8 +67,8 @@ class KDTree2DCore:
         """
         Frees the memory allocated to store the kd-Tree.
         """
-    def save(self, file: BinaryIO | StrOrBytesPath) -> None: ...
-    def load(self, file: BinaryIO | StrOrBytesPath) -> None: ...
+    def save(self, file: StrOrBytesPath | SupportsWrite[bytes]) -> None: ...
+    def load(self, file: StrOrBytesPath | SupportsRead[bytes]) -> None: ...
 
 class KDTree2D(KDTree2DCore):
     """
