@@ -1,4 +1,10 @@
-from ..core import AffineMatrix3D, BoundingBox3D, Intersection, Material, Point3D, Primitive, Ray
+from ..core.boundingbox import BoundingBox3D
+from ..core.intersection import Intersection
+from ..core.material import Material
+from ..core.math import AffineMatrix3D, Point3D
+from ..core.ray import Ray
+from ..core.scenegraph import Primitive
+from ..core.scenegraph._nodebase import _NodeBase
 
 class Box(Primitive):
     """
@@ -31,7 +37,7 @@ class Box(Primitive):
         self,
         lower: Point3D | None = None,
         upper: Point3D | None = None,
-        parent: object | None = None,
+        parent: _NodeBase | None = None,
         transform: AffineMatrix3D | None = None,
         material: Material | None = None,
         name: str | None = None,
@@ -54,8 +60,14 @@ class Box(Primitive):
         """
     @upper.setter
     def upper(self, value: Point3D) -> None: ...
-    def hit(self, ray: Ray) -> Intersection: ...
-    def next_intersection(self) -> Intersection: ...
+    def hit(self, ray: Ray) -> Intersection | None: ...
+    def next_intersection(self) -> Intersection | None: ...
     def contains(self, point: Point3D) -> bool: ...
     def bounding_box(self) -> BoundingBox3D: ...
-    def instance(self, parent: object | None = None, transform: AffineMatrix3D | None = None, material: Material | None = None, name: str | None = None) -> Box: ...
+    def instance(
+        self,
+        parent: _NodeBase | None = None,
+        transform: AffineMatrix3D | None = None,
+        material: Material | None = None,
+        name: str | None = None,
+    ) -> Box: ...
