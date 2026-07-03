@@ -1,4 +1,4 @@
-from ....core.math.affinematrix import AffineMatrix3D
+from ....core.math import AffineMatrix3D
 from ....core.scenegraph._nodebase import _NodeBase
 from ....core.scenegraph.primitive import Primitive
 from ....core.workflow import RenderEngine
@@ -53,25 +53,25 @@ class TargetedPixel(Observer0D):
     def __init__(
         self,
         targets: list[Primitive],
-        targeted_path_prob: float | None = None,
+        targeted_path_prob: float = 0.9,
         pipelines: list[Pipeline0D] | None = None,
-        x_width: float | None = None,
-        y_width: float | None = None,
+        x_width: float = 0.01,
+        y_width: float = 0.01,
+        pixel_samples: int = 1000,
+        samples_per_task: int = 250,
         parent: _NodeBase | None = None,
         transform: AffineMatrix3D | None = None,
         name: str | None = None,
-        render_engine: RenderEngine | None = None,
-        pixel_samples: int | None = None,
-        samples_per_task: int | None = None,
-        spectral_rays: int | None = None,
-        spectral_bins: int | None = None,
-        min_wavelength: float | None = None,
-        max_wavelength: float | None = None,
-        ray_extinction_prob: float | None = None,
-        ray_extinction_min_depth: int | None = None,
-        ray_max_depth: int | None = None,
-        ray_importance_sampling: bool | None = None,
-        ray_important_path_weight: float | None = None,
+        render_engine: RenderEngine = ...,
+        spectral_rays: int = 1,
+        spectral_bins: int = 15,
+        min_wavelength: float = 375.0,
+        max_wavelength: float = 740.0,
+        ray_extinction_prob: float = 0.01,
+        ray_extinction_min_depth: int = 3,
+        ray_max_depth: int = 500,
+        ray_importance_sampling: bool = True,
+        ray_important_path_weight: float = 0.2,
         quiet: bool = False,
     ) -> None: ...
     @property
