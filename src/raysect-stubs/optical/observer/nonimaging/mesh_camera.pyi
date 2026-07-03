@@ -7,10 +7,6 @@ from ....primitive.mesh import Mesh
 from ..base.observer import DEFAULT_ENGINE, Observer1D
 from ..base.pipeline import Pipeline1D
 from ..base.sampler import FrameSampler1D
-from ..sampler1d import FullFrameSampler1D
-
-DEFAULT_SAMPLER = FullFrameSampler1D()
-DEFAULT_PIPELINES = [Pipeline1D()]
 
 class MeshCamera(Observer1D):
     """
@@ -66,8 +62,8 @@ class MeshCamera(Observer1D):
         self,
         mesh: Mesh,
         surface_offset: float | None = 0.0,
-        frame_sampler: FrameSampler1D | None = DEFAULT_SAMPLER,
-        pipelines: list[Pipeline1D] | None = DEFAULT_PIPELINES,
+        frame_sampler: FrameSampler1D | None = ...,
+        pipelines: list[Pipeline1D] | None = ...,
         parent: _NodeBase | None = None,
         transform: AffineMatrix3D | None = None,
         name: str | None = None,
