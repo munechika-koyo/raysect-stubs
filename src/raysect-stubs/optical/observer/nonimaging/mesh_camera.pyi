@@ -3,8 +3,9 @@ from numpy.typing import NDArray
 
 from ....core.math import AffineMatrix3D
 from ....core.scenegraph._nodebase import _NodeBase
+from ....core.workflow import RenderEngine
 from ....primitive.mesh import Mesh
-from ..base.observer import DEFAULT_ENGINE, Observer1D
+from ..base.observer import Observer1D
 from ..base.pipeline import Pipeline1D
 from ..base.sampler import FrameSampler1D
 
@@ -67,7 +68,7 @@ class MeshCamera(Observer1D):
         parent: _NodeBase | None = None,
         transform: AffineMatrix3D | None = None,
         name: str | None = None,
-        render_engine=DEFAULT_ENGINE,
+        render_engine: RenderEngine | None = ...,
         pixel_samples: int = 1000,
         spectral_rays: int = 1,
         spectral_bins: int = 15,
