@@ -16,13 +16,15 @@ backend = { name = "pixi-build-python", version = "*" }
 noarch = true
 
 [package.host-dependencies]
-uv = "*"
 python = ">=3.10"
 hatchling = "*"
 hatch-vcs = "*"
 
 [package.run-dependencies]
 numpy = "*"
+
+[package.run-constraints]
+raysect = ">=0.9.0,<1.0.0"
 
 # ---------------------------------
 # === Development Configuration ===
@@ -36,7 +38,6 @@ ipython = ">=8.37.0,<10"
 
 [tasks]
 # Testing and type checking
-test = "pytest tests/"
 type-check = "mypy raysect-stubs/"
 
 # Type stub generation
@@ -51,10 +52,20 @@ typegen = { cmd = [
   "--include-docstrings",
 ], description = "📝 Generate type stubs for raysect" }
 
+[feature.test.dependencies]
+mypy = "*"
+raysect = "*"
+
+[feature.test.pypi-dependencies]
+raysect-stubs = { path = ".", editable = false }
+
+[feature.test.tasks]
+test = { cmd = "stubtest --allowlist=.mypyignore --ignore-disjoint-bases raysect" }
+
 # === Linting feature ===
 [feature.lint.dependencies]
 dprint = "*"
-lefthook = "<2.1.10"
+lefthook = ">=2.1.9,<3"
 ruff = "*"
 typos = "*"
 mypy = "*"
@@ -96,10 +107,11 @@ typegen-update = { cmd = [
 [feature.py-oldest.dependencies]
 python = "3.10.*"
 [feature.py-latest.dependencies]
-python = "3.13.*"
+python = "3.14.*"
 
 [environments]
 default = { features = ["py-latest"], solve-group = "py-latest" }
+test = { features = ["test"], no-default-feature = true }
 py-latest = { features = [
   "py-latest",
 ], solve-group = "py-latest" } # alias of test
