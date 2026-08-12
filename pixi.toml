@@ -128,11 +128,13 @@ python = "3.14.*"
 
 [environments]
 default = { features = ["py-latest"], solve-group = "py-latest" }
-test = { features = ["test"], no-default-feature = true }
 py-latest = { features = [
   "py-latest",
 ], solve-group = "py-latest" } # alias of test
 py-oldest = { features = ["py-oldest"], solve-group = "py-oldest" }
+test = { features = ["test"], no-default-feature = true }
+test-latest = { features = ["test", "py-latest"], no-default-feature = true }
+test-oldest = { features = ["test", "py-oldest"], no-default-feature = true }
 lint = ["lint", "default"]
 build = { features = ["build"], no-default-feature = true }
 tools = { features = ["tools"], no-default-feature = true }
