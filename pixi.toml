@@ -109,6 +109,17 @@ typegen-update = { cmd = [
   "src/raysect-stubs/",
 ], description = "📝 Update type stubs for raysect" }
 
+# === Build feature ===
+[feature.build.dependencies]
+python-build = "*"
+
+[feature.build.dev]
+raysect-stubs = { path = "." }
+
+[feature.build.tasks]
+build-wheel = { cmd = "python -m build -nx -w", description = "🔧 Build wheel distribution" }
+build-sdist = { cmd = "python -m build -nx -s", description = "🔧 Build source distribution" }
+
 # === Python environment features ===
 [feature.py-oldest.dependencies]
 python = "3.10.*"
@@ -123,4 +134,5 @@ py-latest = { features = [
 ], solve-group = "py-latest" } # alias of test
 py-oldest = { features = ["py-oldest"], solve-group = "py-oldest" }
 lint = ["lint", "default"]
+build = { features = ["build"], no-default-feature = true }
 tools = { features = ["tools"], no-default-feature = true }
