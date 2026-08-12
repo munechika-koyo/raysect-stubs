@@ -1,7 +1,11 @@
+import sys
 from collections.abc import Sequence
 from typing import Protocol, TypeAlias
 
-from typing_extensions import Buffer
+if sys.version_info >= (3, 12):
+    from collections.abc import Buffer
+else:
+    from typing_extensions import Buffer
 
 class _SupportsTupleIndexing(Protocol):
     """Protocol for objects that support tuple indexing like arr[i, j]."""

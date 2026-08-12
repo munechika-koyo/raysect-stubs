@@ -1,8 +1,13 @@
-from typing import Self
+import sys
 
 import numpy as np
 from _typeshed import StrOrBytesPath, SupportsRead, SupportsWrite
 from numpy.typing import NDArray
+
+if sys.version_info >= (3, 11):
+    from typing import Self
+else:
+    from typing_extensions import Self
 
 from ...core.boundingbox import BoundingBox3D
 from ...core.intersection import Intersection

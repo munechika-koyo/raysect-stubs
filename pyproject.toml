@@ -21,7 +21,7 @@ classifiers = [
   "Topic :: Software Development :: Libraries :: Python Modules",
   "Typing :: Stubs Only",
 ]
-dependencies = ["numpy"]
+dependencies = ["numpy", 'typing-extensions>=4.6; python_version < "3.12"']
 dynamic = ["version"]
 
 [project.urls]

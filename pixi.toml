@@ -22,9 +22,10 @@ hatch-vcs = "*"
 
 [package.run-dependencies]
 numpy = "*"
+typing-extensions = { version = ">=4.6", when = "python <3.12" }
 
 [package.run-constraints]
-raysect = ">=0.9.0,<1.0.0"
+raysect = ">=0.9.0,<0.10.0"
 
 # ---------------------------------
 # === Development Configuration ===
