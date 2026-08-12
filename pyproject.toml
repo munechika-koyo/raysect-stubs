@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "raysect-stubs"
-description = "Type annotations for Raysect"
+description = "Typing Stubs for Raysect"
 readme = "README.md"
 requires-python = ">=3.10"
 license = "BSD-3-Clause"
