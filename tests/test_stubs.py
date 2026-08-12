@@ -58,6 +58,53 @@ p2 = p1 + v1
     assert exit_status == 0, f"MyPy errors: {stdout}"
 
 
+def test_private_subclass_extension_hooks():
+    """Test that protected Python extension hooks carry override type information."""
+    result = api.run(
+        [
+            "--no-error-summary",
+            "--show-error-codes",
+            "-c",
+            """
+from typing_extensions import override
+
+from raysect.core.math import Point3D
+from raysect.core.math.spatial import KDTree3D
+from raysect.core.ray import Ray as CoreRay
+from raysect.core.scenegraph import Node
+from raysect.optical import Ray
+from raysect.optical.observer import Observer2D
+
+class CustomNode(Node):
+    @override
+    def _modified(self) -> None:
+        pass
+
+class CustomKDTree(KDTree3D):
+    @override
+    def _trace_items(self, item_ids: list[int], ray: CoreRay, max_range: float) -> bool:
+        return False
+
+    @override
+    def _items_containing_items(self, item_ids: list[int], point: Point3D) -> list[int]:
+        return []
+
+class CustomObserver(Observer2D):
+    @override
+    def _generate_rays(self, x: int, y: int, template: Ray, ray_count: int) -> list[tuple[Ray, float]]:
+        return []
+
+    @override
+    def _pixel_sensitivity(self, x: int, y: int) -> float:
+        return 1.0
+        """,
+        ]
+    )
+
+    stdout, stderr, exit_status = result
+    assert exit_status == 0, f"MyPy errors: {stdout}"
+
+
 if __name__ == "__main__":
     test_basic_import_stubs()
     test_math_operations()
