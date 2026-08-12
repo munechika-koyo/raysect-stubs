@@ -54,13 +54,19 @@ typegen = { cmd = [
 
 [feature.test.dependencies]
 mypy = "*"
+pytest = "*"
 raysect = "*"
 
 [feature.test.pypi-dependencies]
 raysect-stubs = { path = ".", editable = false }
 
 [feature.test.tasks]
-test = { cmd = "stubtest --allowlist=.mypyignore --ignore-disjoint-bases raysect" }
+test-regression = { cmd = "pytest -q tests/test_stubs.py", description = "Run regression tests for the stubs" }
+test-stubtest = { cmd = "stubtest --allowlist=.mypyignore --ignore-disjoint-bases raysect", description = "Check stubs against the Raysect runtime" }
+test = { depends-on = [
+  "test-regression",
+  "test-stubtest",
+], description = "Run all stub tests" }
 
 # === Linting feature ===
 [feature.lint.dependencies]
