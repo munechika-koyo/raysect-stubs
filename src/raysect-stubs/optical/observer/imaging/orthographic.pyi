@@ -1,6 +1,5 @@
 from ....core.math import AffineMatrix3D
 from ....core.scenegraph._nodebase import _NodeBase
-from ... import Ray
 from ..base import Observer2D, Pipeline2D
 from ..sampler2d import FrameSampler2D
 
@@ -61,5 +60,3 @@ class OrthographicCamera(Observer2D):
         """
     @sensitivity.setter
     def sensitivity(self, value: float) -> None: ...
-    def _generate_rays(self, x: int, y: int, template: Ray, ray_count: int) -> list[tuple[Ray, float]]: ...
-    def _pixel_sensitivity(self, x: int, y: int) -> float: ...

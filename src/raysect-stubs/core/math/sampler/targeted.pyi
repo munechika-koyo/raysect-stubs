@@ -1,16 +1,8 @@
-from abc import abstractmethod
 from typing import Literal, overload
-
-from numpy import float64
-from numpy.typing import NDArray
 
 from .. import Point3D, Vector3D
 
 class _TargetedSampler:
-    _total_weight: float
-    _targets: tuple[tuple[Point3D, float, float], ...]
-    _cdf: NDArray[float64]
-
     def __init__(self, targets: list[tuple[Point3D, float, float]]) -> None:
         """
         Targets is a list of tuples describing the target spheres and their weighting.
@@ -28,6 +20,7 @@ class _TargetedSampler:
     def __call__(self, point: Point3D, samples: None = None, pdf: Literal[True] = True) -> tuple[Vector3D, float]: ...
     @overload
     def __call__(self, point: Point3D, samples: int, pdf: Literal[True] = True) -> list[tuple[Vector3D, float]]: ...
+    @overload
     def __call__(self, point: Point3D, samples: int | None = None, pdf: bool = False) -> Vector3D | tuple[Vector3D, float] | list[Vector3D] | list[tuple[Vector3D, float]]:
         """
         If samples is not provided, returns a single Vector3D sample from
@@ -41,7 +34,6 @@ class _TargetedSampler:
         :param bool pdf: Toggle for returning associated sample pdfs (default=False).
         :return: A Vector3D, tuple or list of Vector3D objects.
         """
-    @abstractmethod
     def pdf(self, point: Point3D, sample: Vector3D) -> float:
         """
         Calculates the value of the PDF for the specified sample point and direction.

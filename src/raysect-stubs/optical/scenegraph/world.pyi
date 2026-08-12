@@ -1,5 +1,4 @@
 from ...core.math import Point3D, Vector3D
-from ...core.scenegraph._nodebase import _NodeBase  # pyright: ignore[reportPrivateUsage]
 from ...core.scenegraph.primitive import Primitive
 from ...core.scenegraph.signal import ChangeSignal
 from ...core.scenegraph.world import World as CoreWorld
@@ -58,21 +57,6 @@ class World(CoreWorld):
         will do nothing unless the force keyword option is set to True.
 
         :param bint force: If set to True, forces rebuilding of acceleration structure.
-        """
-    def _change(self, node: _NodeBase, signal: ChangeSignal) -> None:
-        """
-        Notifies the World of a change to the scene-graph.
-
-        This method must be called if a change occurs that may have invalidated
-        any acceleration structures held by the World, and also the important primitives
-        list maintained be the importance manager.
-
-        The node on which the change occurs and a ChangeSignal must be
-        provided. The ChangeSignal must specify the nature of the change.
-
-        The optical World object only recognises the MATERIAL signal. When a
-        MATERIAL signal is received, the ImportanceManager is rebuilt to reflect
-        changes to the important primitive list and their respective weights.
         """
     def important_direction_sample(self, origin: Point3D) -> Vector3D:
         """

@@ -1,5 +1,3 @@
-from abc import abstractmethod
-
 from _typeshed import StrOrBytesPath, SupportsRead, SupportsWrite
 
 from ...boundingbox import BoundingBox3D
@@ -74,10 +72,6 @@ class KDTree3DCore:
         :param point: A Point3D object.
         :return: A list of ids (indices) of the items containing the point
         """
-    def __dealloc__(self) -> None:
-        """
-        Frees the memory allocated to store the kd-Tree.
-        """
     def save(self, file: StrOrBytesPath | SupportsWrite[bytes]) -> None: ...
     def load(self, file: StrOrBytesPath | SupportsRead[bytes]) -> None: ...
 
@@ -94,7 +88,7 @@ class KDTree3D(KDTree3DCore):
     :param hit_cost: The relative computational cost of item hit evaluations vs kd-tree traversal (default 20.0).
     :param empty_bonus: The bonus applied to node splits that generate empty leaves (default 0.2).
     """
-    @abstractmethod
+
     def _trace_items(self, item_ids: list[int], ray: Ray, max_range: float) -> bool:
         """
         Tests each item to identify if an intersection occurs.
@@ -114,7 +108,6 @@ class KDTree3D(KDTree3DCore):
         :param max_range: The maximum intersection search range.
         :return: True is a hit occurs, false otherwise.
         """
-    @abstractmethod
     def _items_containing_items(self, item_ids: list[int], point: Point3D) -> list[int]:
         """
         Tests each item in the list to identify if they enclose the point.

@@ -20,7 +20,7 @@ class Function2D(FloatFunction):
     that accepts a function object.
     """
 
-    def __call__(self, x: float, y: float, /) -> float:
+    def __call__(self, x: float, y: float) -> float:
         """Evaluate the function f(x, y)
 
         :param float x: function parameter x

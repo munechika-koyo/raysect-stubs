@@ -1,5 +1,3 @@
-from abc import abstractmethod
-
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
@@ -35,7 +33,6 @@ class SpectralFunction:
         :rtype: float
         """
 
-    @abstractmethod
     def evaluate(self, wavelength: float) -> float:
         """
         Evaluate the spectral function f(wavelength)
@@ -44,7 +41,6 @@ class SpectralFunction:
         :rtype: float
         """
 
-    @abstractmethod
     def integrate(self, min_wavelength: float, max_wavelength: float) -> float:
         """
         Calculates the integrated radiance over the specified spectral range.
@@ -134,7 +130,6 @@ class NumericallyIntegratedSF(SpectralFunction):
         :rtype: float
         """
 
-    @abstractmethod
     def function(self, wavelength: float) -> float:
         """
         Function to numerically integrate.

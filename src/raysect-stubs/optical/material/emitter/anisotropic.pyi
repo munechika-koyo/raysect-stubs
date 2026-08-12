@@ -1,7 +1,5 @@
-from abc import abstractmethod
-
 from ....core import Intersection, Primitive
-from ....core.math import AffineMatrix3D, Normal3D, Point3D, Vector3D
+from ....core.math import AffineMatrix3D, Normal3D, Point3D
 from ... import Ray, Spectrum, World
 from ..material import NullVolume
 
@@ -29,17 +27,7 @@ class AnisotropicSurfaceEmitter(NullVolume):
         primitive_to_world: AffineMatrix3D,
         intersection: Intersection,
     ) -> Spectrum: ...
-    @abstractmethod
-    def emission_function(
-        self,
-        direction: Vector3D,
-        spectrum: Spectrum,
-        world: World,
-        ray: Ray,
-        primitive: Primitive,
-        world_to_primitive: AffineMatrix3D,
-        primitive_to_world: AffineMatrix3D,
-    ) -> Spectrum:
+    def emission_function(self, spectrum: Spectrum, cosine: float, back_face: bool) -> Spectrum:
         """
         Returns the emission along the observation direction.
 

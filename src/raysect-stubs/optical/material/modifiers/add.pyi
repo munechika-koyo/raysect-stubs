@@ -67,7 +67,7 @@ class Add(Material):
         primitive_to_world: AffineMatrix3D,
         intersection: Intersection,
     ) -> Spectrum: ...
-    def evaluate_volume(
+    def evaluate_volume(  # pyrefly: ignore [bad-override-param-name]
         self,
         spectrum: Spectrum,
         world: World,
@@ -75,6 +75,6 @@ class Add(Material):
         primitive: Primitive,
         start_point: Point3D,
         end_point: Point3D,
-        world_to_primitive: AffineMatrix3D,
-        primitive_to_world: AffineMatrix3D,
+        to_local: AffineMatrix3D,
+        to_world: AffineMatrix3D,
     ) -> Spectrum: ...

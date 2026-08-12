@@ -1,3 +1,5 @@
+from typing import Any
+
 from .processor import PixelProcessor
 from .slice import SpectralSlice
 
@@ -42,7 +44,7 @@ class Pipeline0D:
           by the requesting worker thread.
         :rtype: PixelProcessor
         """
-    def update(self, slice_id: int, packed_result: tuple, samples: int) -> None:
+    def update(self, slice_id: int, packed_result: tuple[Any, ...], samples: int) -> None:
         """
         Updates the internal results array with packed results from the pixel processor.
 
@@ -123,7 +125,7 @@ class Pipeline1D:
           by the requesting worker thread.
         :rtype: PixelProcessor
         """
-    def update(self, pixel: int, slice_id: int, packed_result: tuple) -> None:
+    def update(self, pixel: int, slice_id: int, packed_result: tuple[Any, ...]) -> None:
         """
         Updates the internal results array with packed results from the pixel processor.
 
@@ -205,7 +207,7 @@ class Pipeline2D:
           by the requesting worker thread.
         :rtype: PixelProcessor
         """
-    def update(self, x: int, y: int, slice_id: int, packed_result: tuple) -> None:
+    def update(self, x: int, y: int, slice_id: int, packed_result: tuple[Any, ...]) -> None:
         """
         Updates the internal results array with packed results from the pixel processor.
 

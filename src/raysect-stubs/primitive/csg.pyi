@@ -1,4 +1,4 @@
-from ..core import BoundingBox3D, ChangeSignal, Intersection, Material, Primitive, Ray
+from ..core import BoundingBox3D, Intersection, Material, Primitive, Ray
 from ..core.math import AffineMatrix3D, Point3D
 from ..core.scenegraph import Node
 from ..core.scenegraph._nodebase import _NodeBase
@@ -70,13 +70,6 @@ class CSGRoot(Node):
     to the CSG primitive and its enclosing scenegraph.
     """
     def __init__(self, csg_primitive: CSGPrimitive) -> None: ...
-    def _change(self, node: _NodeBase, signal: ChangeSignal) -> None:
-        """
-        Handles a scenegraph node change handler.
-
-        Propagates geometry change notifications to the enclosing CSG primitive and its
-        scenegraph.
-        """
 
 class Union(CSGPrimitive):
     """
@@ -111,7 +104,7 @@ class Union(CSGPrimitive):
 
     """
 
-    def contains(self, point: Point3D) -> bool: ...
+    def contains(self, p: Point3D) -> bool: ...
     def bounding_box(self) -> BoundingBox3D: ...
     def instance(
         self,
@@ -152,10 +145,9 @@ class Intersect(CSGPrimitive):
 
         csg_intersection = Intersect(cyl_x, sphere, world, material=AbsorbingSurface(),
                                      transform=translate(-2.1, 2.1, 2.5)*rotate(30, -20, 0))
-
     """
 
-    def contains(self, point: Point3D) -> bool: ...
+    def contains(self, p: Point3D) -> bool: ...
     def bounding_box(self) -> BoundingBox3D: ...
     def instance(
         self,
@@ -197,7 +189,7 @@ class Subtract(CSGPrimitive):
 
     """
 
-    def contains(self, point: Point3D) -> bool: ...
+    def contains(self, p: Point3D) -> bool: ...
     def bounding_box(self) -> BoundingBox3D: ...
     def instance(
         self,

@@ -3,12 +3,11 @@ from .node import Node
 from .signal import ChangeSignal
 
 class BridgeNode(Node):
-    destination: _NodeBase
     """
     Specialised scene-graph root node that propagates geometry notifications.
     """
     def __init__(self, destination: _NodeBase) -> None: ...
-    def _change(self, node: _NodeBase, signal: ChangeSignal) -> None:
+    def _change(self, node: _NodeBase, change: ChangeSignal) -> None:
         """
         Handles a scene-graph node change handler.
 

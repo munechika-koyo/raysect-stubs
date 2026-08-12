@@ -1,5 +1,3 @@
-from abc import abstractmethod
-
 from ....core import Primitive
 from ....core.math import AffineMatrix3D, Point3D, Vector3D
 from ... import Ray, Spectrum, World
@@ -27,7 +25,6 @@ class HomogeneousVolumeEmitter(NullVolume):
         world_to_primitive: AffineMatrix3D,
         primitive_to_world: AffineMatrix3D,
     ) -> Spectrum: ...
-    @abstractmethod
     def emission_function(
         self,
         direction: Vector3D,

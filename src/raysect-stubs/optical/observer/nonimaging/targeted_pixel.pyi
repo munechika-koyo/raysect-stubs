@@ -2,7 +2,6 @@ from ....core.math import AffineMatrix3D
 from ....core.scenegraph._nodebase import _NodeBase
 from ....core.scenegraph.primitive import Primitive
 from ....core.workflow import RenderEngine
-from ....optical.ray import Ray
 from ..base.observer import Observer0D
 from ..base.pipeline import Pipeline0D
 
@@ -136,5 +135,3 @@ class TargetedPixel(Observer0D):
         """
     @targeted_path_prob.setter
     def targeted_path_prob(self, value: float) -> None: ...
-    def _generate_rays(self, template: Ray, ray_count: int) -> list[tuple[Ray, float]]: ...
-    def _pixel_sensitivity(self) -> float: ...

@@ -9,7 +9,7 @@ def sample1d(
     function: float | Function1D | Callable[[float], float],
     x_min: float,
     x_max: float,
-    num_samples: int,
+    x_samples: int,
 ) -> tuple[NDArray[float64], NDArray[float64]]:
     """
     Samples Function1D over given range.

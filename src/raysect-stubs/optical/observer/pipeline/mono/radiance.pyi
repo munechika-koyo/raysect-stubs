@@ -1,4 +1,4 @@
-from ....spectralfunction import ConstantSF, SpectralFunction
+from ....spectralfunction import SpectralFunction
 from ....spectrum import Spectrum
 from ...base.processor import PixelProcessor
 from .power import PowerPipeline0D, PowerPipeline1D, PowerPipeline2D
@@ -6,8 +6,6 @@ from .power import PowerPipeline0D, PowerPipeline1D, PowerPipeline2D
 _DEFAULT_PIPELINE_NAME: str = "Radiance Pipeline"
 _DISPLAY_DPI: int = 100
 _DISPLAY_SIZE: tuple[float, float] = (512 / _DISPLAY_DPI, 512 / _DISPLAY_DPI)
-
-CONSTANTSF = ConstantSF(1.0)
 
 class RadiancePipeline0D(PowerPipeline0D):
     """
@@ -27,7 +25,7 @@ class RadiancePipeline0D(PowerPipeline0D):
 
     def __init__(
         self,
-        filter: SpectralFunction | None = CONSTANTSF,
+        filter: SpectralFunction | None = ...,
         accumulate: bool = True,
         name: str = _DEFAULT_PIPELINE_NAME,
     ) -> None: ...
@@ -54,7 +52,7 @@ class RadiancePipeline1D(PowerPipeline1D):
 
     def __init__(
         self,
-        filter: SpectralFunction | None = CONSTANTSF,
+        filter: SpectralFunction | None = ...,
         accumulate: bool = True,
         name: str = _DEFAULT_PIPELINE_NAME,
     ) -> None: ...
@@ -92,7 +90,7 @@ class RadiancePipeline2D(PowerPipeline2D):
 
     def __init__(
         self,
-        filter: SpectralFunction | None = CONSTANTSF,
+        filter: SpectralFunction | None = ...,
         display_progress: bool = True,
         display_update_time: float = 15.0,
         accumulate: bool = True,

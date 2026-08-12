@@ -1,3 +1,5 @@
+from typing import Any
+
 from ... import Spectrum
 
 class PixelProcessor:
@@ -35,7 +37,7 @@ class PixelProcessor:
         :param float sensitivity: The pixel sensitivity.
         """
 
-    def pack_results(self) -> tuple:
+    def pack_results(self) -> tuple[Any, ...]:
         """
         Packs the contents of the internal buffer.
 

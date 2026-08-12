@@ -55,6 +55,8 @@ class Torus(Primitive):
     def major_radius(self) -> float:
         """
         The major radius of this torus.
+
+        :rtype: float
         """
     @major_radius.setter
     def major_radius(self, value: float) -> None: ...
@@ -62,12 +64,14 @@ class Torus(Primitive):
     def minor_radius(self) -> float:
         """
         The minor radius of this torus.
+
+        :rtype: float
         """
     @minor_radius.setter
     def minor_radius(self, value: float) -> None: ...
     def hit(self, ray: Ray) -> Intersection | None: ...
     def next_intersection(self) -> Intersection | None: ...
-    def contains(self, point: Point3D) -> bool: ...
+    def contains(self, point: Point3D) -> bool: ...  # pyrefly: ignore [bad-override-param-name]
     def bounding_box(self) -> BoundingBox3D: ...
     def bounding_sphere(self) -> BoundingSphere3D: ...
     def instance(

@@ -24,62 +24,58 @@ class Function1D(FloatFunction):
         :rtype: float
         """
     @overload
-    def __add__(self, b: Callable[[float], float] | Function1D) -> AddFunction1D: ...
+    def __add__(self, b: Callable[[float], float] | Function1D, /) -> AddFunction1D: ...
     @overload
-    def __add__(self, b: float) -> AddScalar1D: ...
+    def __add__(self, b: float, /) -> AddScalar1D: ...
     @overload
-    def __radd__(self, a: Callable[[float], float] | Function1D) -> AddFunction1D: ...
+    def __radd__(self, a: Callable[[float], float] | Function1D, /) -> AddFunction1D: ...
     @overload
-    def __radd__(self, a: float) -> AddScalar1D: ...
+    def __radd__(self, a: float, /) -> AddScalar1D: ...
     @overload
-    def __sub__(self, b: Callable[[float], float] | Function1D) -> SubtractFunction1D: ...
+    def __sub__(self, b: Callable[[float], float] | Function1D, /) -> SubtractFunction1D: ...
     @overload
-    def __sub__(self, b: float) -> SubtractScalar1D: ...
+    def __sub__(self, b: float, /) -> SubtractScalar1D: ...
     @overload
-    def __rsub__(self, a: Callable[[float], float] | Function1D) -> SubtractFunction1D: ...
+    def __rsub__(self, a: Callable[[float], float] | Function1D, /) -> SubtractFunction1D: ...
     @overload
-    def __rsub__(self, a: float) -> SubtractScalar1D: ...
+    def __rsub__(self, a: float, /) -> SubtractScalar1D: ...
     @overload
-    def __mul__(self, b: Callable[[float], float] | Function1D) -> MultiplyFunction1D: ...
+    def __mul__(self, b: Callable[[float], float] | Function1D, /) -> MultiplyFunction1D: ...
     @overload
-    def __mul__(self, b: float) -> MultiplyScalar1D: ...
+    def __mul__(self, b: float, /) -> MultiplyScalar1D: ...
     @overload
-    def __rmul__(self, a: Callable[[float], float] | Function1D) -> MultiplyFunction1D: ...
+    def __rmul__(self, a: Callable[[float], float] | Function1D, /) -> MultiplyFunction1D: ...
     @overload
-    def __rmul__(self, a: float) -> MultiplyScalar1D: ...
+    def __rmul__(self, a: float, /) -> MultiplyScalar1D: ...
     @overload
-    def __truediv__(self, b: Callable[[float], float] | Function1D) -> DivideFunction1D: ...
+    def __truediv__(self, b: Callable[[float], float] | Function1D, /) -> DivideFunction1D: ...
     @overload
-    def __truediv__(self, b: float) -> MultiplyScalar1D: ...
+    def __truediv__(self, b: float, /) -> MultiplyScalar1D: ...
     @overload
-    def __rtruediv__(self, a: Callable[[float], float] | Function1D) -> DivideFunction1D: ...
+    def __rtruediv__(self, a: Callable[[float], float] | Function1D, /) -> DivideFunction1D: ...
     @overload
-    def __rtruediv__(self, a: float) -> DivideScalar1D: ...
+    def __rtruediv__(self, a: float, /) -> DivideScalar1D: ...
     @overload
-    def __mod__(self, b: Callable[[float], float] | Function1D) -> ModuloFunction1D: ...
+    def __mod__(self, b: Callable[[float], float] | Function1D, /) -> ModuloFunction1D: ...
     @overload
-    def __mod__(self, b: float) -> ModuloFunctionScalar1D: ...
+    def __mod__(self, b: float, /) -> ModuloFunctionScalar1D: ...
     @overload
-    def __rmod__(self, a: Callable[[float], float] | Function1D) -> ModuloFunction1D: ...
+    def __rmod__(self, a: Callable[[float], float] | Function1D, /) -> ModuloFunction1D: ...
     @overload
-    def __rmod__(self, a: float) -> ModuloFunctionScalar1D: ...
+    def __rmod__(self, a: float, /) -> ModuloFunctionScalar1D: ...
     def __neg__(self) -> MultiplyScalar1D: ...
     @overload
-    def __pow__(self, b: Callable[[float], float] | Function1D, c: Callable[[float], float] | Function1D) -> ModuloFunction1D: ...
+    def __pow__(self, b: Callable[[float], float] | Function1D, c: Callable[[float], float] | Function1D, /) -> ModuloFunction1D: ...
     @overload
-    def __pow__(self, b: Callable[[float], float] | Function1D, c: float) -> ModuloFunctionScalar1D: ...
+    def __pow__(self, b: Callable[[float], float] | Function1D, c: float, /) -> ModuloFunctionScalar1D: ...
     @overload
-    def __pow__(self, b: Callable[[float], float] | Function1D, c: None = None) -> PowFunction1D: ...
+    def __pow__(self, b: Callable[[float], float] | Function1D, c: None = None, /) -> PowFunction1D: ...
     @overload
-    def __pow__(self, b: float, c: None = None) -> PowFunctionScalar1D: ...
-    def __rpow__(self, other): ...
+    def __pow__(self, b: float, c: None = None, /) -> PowFunctionScalar1D: ...
+    def __rpow__(
+        self, other: Callable[[float], float] | Function1D | float, modulo: Callable[[float], float] | Function1D | float | None = None, /
+    ) -> PowFunction1D | PowScalarFunction1D | ModuloFunction1D | ModuloFunctionScalar1D: ...
     def __abs__(self) -> AbsFunction1D: ...
-    @overload
-    def __richcmp__(
-        self, other: Callable[[float], float] | Function1D, op: int
-    ) -> EqualsFunction1D | GreaterEqualsFunction1D | GreaterThanFunction1D | LessEqualsFunction1D | LessThanFunction1D | NotEqualsFunction1D: ...
-    @overload
-    def __richcmp__(self, other: float, op: int) -> EqualsScalar1D | GreaterEqualsScalar1D | GreaterThanScalar1D | LessEqualsScalar1D | LessThanScalar1D | NotEqualsScalar1D: ...
 
 class AddFunction1D(Function1D):
     """
@@ -91,9 +87,6 @@ class AddFunction1D(Function1D):
     :param object function1: A Function1D object or Python callable.
     :param object function2: A Function1D object or Python callable.
     """
-
-    _function1: Function1D
-    _function2: Function1D
 
     def __init__(self, function1: float | Callable[[float], float] | Function1D, function2: float | Callable[[float], float] | Function1D) -> None: ...
 
@@ -108,9 +101,6 @@ class SubtractFunction1D(Function1D):
     :param object function2: A Function1D object or Python callable.
     """
 
-    _function1: Function1D
-    _function2: Function1D
-
     def __init__(self, function1: float | Callable[[float], float] | Function1D, function2: float | Callable[[float], float] | Function1D) -> None: ...
 
 class MultiplyFunction1D(Function1D):
@@ -123,9 +113,6 @@ class MultiplyFunction1D(Function1D):
     :param object function1: A Function1D object or Python callable.
     :param object function2: A Function1D object or Python callable.
     """
-
-    _function1: Function1D
-    _function2: Function1D
 
     def __init__(self, function1: float | Callable[[float], float] | Function1D, function2: float | Callable[[float], float] | Function1D) -> None: ...
 
@@ -140,9 +127,6 @@ class DivideFunction1D(Function1D):
     :param object function2: A Function1D object or Python callable.
     """
 
-    _function1: Function1D
-    _function2: Function1D
-
     def __init__(self, function1d: float | Callable[[float], float] | Function1D, function2d: float | Callable[[float], float] | Function1D) -> None: ...
 
 class ModuloFunction1D(Function1D):
@@ -155,9 +139,6 @@ class ModuloFunction1D(Function1D):
     :param object function1: A Function1D object or Python callable.
     :param object function2: A Function1D object or Python callable.
     """
-
-    _function1: Function1D
-    _function2: Function1D
 
     def __init__(self, function1d: float | Callable[[float], float] | Function1D, function2d: float | Callable[[float], float] | Function1D) -> None: ...
 
@@ -172,9 +153,6 @@ class PowFunction1D(Function1D):
     :param object function2: A Function1D object or Python callable.
     """
 
-    _function1: Function1D
-    _function2: Function1D
-
     def __init__(self, function1: float | Callable[[float], float] | Function1D, function2: float | Callable[[float], float] | Function1D) -> None: ...
 
 class AbsFunction1D(FloatFunction):
@@ -187,7 +165,6 @@ class AbsFunction1D(FloatFunction):
     :param object function: A Function1D object or Python callable.
     """
 
-    _Function: Function1D
     def __init__(self, function: Callable[[float], float] | Function1D) -> None: ...
 
 class EqualsFunction1D(Function1D):
@@ -200,9 +177,6 @@ class EqualsFunction1D(Function1D):
     :param object function1: A Function1D object or Python callable.
     :param object function2: A Function1D object or Python callable.
     """
-
-    _function1: Function1D
-    _function2: Function1D
 
     def __init__(self, function1: float | Callable[[float], float] | Function1D, function2: float | Callable[[float], float] | Function1D) -> None: ...
 
@@ -217,9 +191,6 @@ class NotEqualsFunction1D(Function1D):
     :param object function2: A Function1D object or Python callable.
     """
 
-    _function1: Function1D
-    _function2: Function1D
-
     def __init__(self, function1: float | Callable[[float], float] | Function1D, function2: float | Callable[[float], float] | Function1D) -> None: ...
 
 class LessThanFunction1D(Function1D):
@@ -232,9 +203,6 @@ class LessThanFunction1D(Function1D):
     :param object function1: A Function1D object or Python callable.
     :param object function2: A Function1D object or Python callable.
     """
-
-    _function1: Function1D
-    _function2: Function1D
 
     def __init__(self, function1: float | Callable[[float], float] | Function1D, function2: float | Callable[[float], float] | Function1D) -> None: ...
 
@@ -249,9 +217,6 @@ class GreaterThanFunction1D(Function1D):
     :param object function2: A Function1D object or Python callable.
     """
 
-    _function1: Function1D
-    _function2: Function1D
-
     def __init__(self, function1: float | Callable[[float], float] | Function1D, function2: float | Callable[[float], float] | Function1D) -> None: ...
 
 class LessEqualsFunction1D(Function1D):
@@ -264,9 +229,6 @@ class LessEqualsFunction1D(Function1D):
     :param object function1: A Function1D object or Python callable.
     :param object function2: A Function1D object or Python callable.
     """
-
-    _function1: Function1D
-    _function2: Function1D
 
     def __init__(self, function1: float | Callable[[float], float] | Function1D, function2: float | Callable[[float], float] | Function1D) -> None: ...
 
@@ -281,9 +243,6 @@ class GreaterEqualsFunction1D(Function1D):
     :param object function2: A Function1D object or Python callable.
     """
 
-    _function1: Function1D
-    _function2: Function1D
-
     def __init__(self, function1: float | Callable[[float], float] | Function1D, function2: float | Callable[[float], float] | Function1D) -> None: ...
 
 class AddScalar1D(Function1D):
@@ -296,9 +255,6 @@ class AddScalar1D(Function1D):
     :param float value: A double value.
     :param object function: A Function1D object or Python callable.
     """
-
-    _value: float
-    _function: Function1D
 
     def __init__(self, value: float, function: float | Callable[[float], float] | Function1D) -> None: ...
 
@@ -313,9 +269,6 @@ class SubtractScalar1D(Function1D):
     :param object function: A Function1D object or Python callable.
     """
 
-    _value: float
-    _function: Function1D
-
     def __init__(self, value: float, function: float | Callable[[float], float] | Function1D) -> None: ...
 
 class MultiplyScalar1D(Function1D):
@@ -328,9 +281,6 @@ class MultiplyScalar1D(Function1D):
     :param float value: A double value.
     :param object function: A Function1D object or Python callable.
     """
-
-    _value: float
-    _function: Function1D
 
     def __init__(self, value: float, function: float | Callable[[float], float] | Function1D) -> None: ...
 
@@ -345,9 +295,6 @@ class DivideScalar1D(Function1D):
     :param object function: A Function1D object or Python callable.
     """
 
-    _value: float
-    _function: Function1D
-
     def __init__(self, value: float, function: float | Callable[[float], float] | Function1D) -> None: ...
 
 class ModuloScalarFunction1D(Function1D):
@@ -360,9 +307,6 @@ class ModuloScalarFunction1D(Function1D):
     :param float value: A double value.
     :param object function: A Function1D object or Python callable.
     """
-
-    _value: float
-    _function: Function1D
 
     def __init__(self, value: float, function: float | Callable[[float], float] | Function1D) -> None: ...
 
@@ -377,9 +321,6 @@ class ModuloFunctionScalar1D(Function1D):
     :param float value: A double value.
     """
 
-    _function: Function1D
-    _value: float
-
     def __init__(self, function: float | Callable[[float], float] | Function1D, value: float) -> None: ...
 
 class PowScalarFunction1D(Function1D):
@@ -392,9 +333,6 @@ class PowScalarFunction1D(Function1D):
     :param float value: A double value.
     :param object function: A Function1D object or Python callable.
     """
-
-    _value: float
-    _function: Function1D
 
     def __init__(self, value: float, function: float | Callable[[float], float] | Function1D) -> None: ...
 
@@ -409,9 +347,6 @@ class PowFunctionScalar1D(Function1D):
     :param float value: A double value.
     """
 
-    _function: Function1D
-    _value: float
-
     def __init__(self, function: float | Callable[[float], float] | Function1D, value: float) -> None: ...
 
 class EqualsScalar1D(Function1D):
@@ -424,9 +359,6 @@ class EqualsScalar1D(Function1D):
     :param value: A double value.
     :param object function: A Function1D object or Python callable.
     """
-
-    _value: float
-    _function: Function1D
 
     def __init__(self, value: float, function: float | Callable[[float], float] | Function1D) -> None: ...
 
@@ -441,9 +373,6 @@ class NotEqualsScalar1D(Function1D):
     :param object function: A Function1D object or Python callable.
     """
 
-    _value: float
-    _function: Function1D
-
     def __init__(self, value: float, function: float | Callable[[float], float] | Function1D) -> None: ...
 
 class LessThanScalar1D(Function1D):
@@ -456,9 +385,6 @@ class LessThanScalar1D(Function1D):
     :param value: A double value.
     :param object function: A Function1D object or Python callable.
     """
-
-    _value: float
-    _function: Function1D
 
     def __init__(self, value: float, function: float | Callable[[float], float] | Function1D) -> None: ...
 
@@ -473,9 +399,6 @@ class GreaterThanScalar1D(Function1D):
     :param object function: A Function1D object or Python callable.
     """
 
-    _value: float
-    _function: Function1D
-
     def __init__(self, value: float, function: float | Callable[[float], float] | Function1D) -> None: ...
 
 class LessEqualsScalar1D(Function1D):
@@ -489,9 +412,6 @@ class LessEqualsScalar1D(Function1D):
     :param object function: A Function1D object or Python callable.
     """
 
-    _value: float
-    _function: Function1D
-
     def __init__(self, value: float, function: float | Callable[[float], float] | Function1D) -> None: ...
 
 class GreaterEqualsScalar1D(Function1D):
@@ -504,8 +424,5 @@ class GreaterEqualsScalar1D(Function1D):
     :param value: A double value.
     :param object function: A Function1D object or Python callable.
     """
-
-    _value: float
-    _function: Function1D
 
     def __init__(self, value: float, function: float | Callable[[float], float] | Function1D) -> None: ...

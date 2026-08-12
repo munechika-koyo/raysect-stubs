@@ -1,5 +1,4 @@
-import numpy as np
-from numpy.typing import NDArray
+from typing import Any
 
 from ....core.math import StatsArray2D
 from ...spectrum import SpectralFunction
@@ -99,16 +98,16 @@ class BayerPipeline2D(Pipeline2D):
     def display_black_point(self, value: float) -> None: ...
     @property
     def display_gamma(self) -> float:
-        """
+        r"""
         Power law exponent to approximate non-linear human eye response.
 
         Each pixel value will be raised to power gamma:
 
         .. math::
 
-            V_{out} = V_{in}^{\\gamma}
+            V_{out} = V_{in}^{\gamma}
 
-        For more information see `Wikipedia <https://en.wikipedia.org/wiki/Gamma_correction>`__.
+        For more information see `Wikipedia <https://en.wikipedia.org/wiki/Gamma_correction>`_.
 
         :rtype: float
         """
@@ -123,6 +122,16 @@ class BayerPipeline2D(Pipeline2D):
         """
     @display_auto_exposure.setter
     def display_auto_exposure(self, value: bool) -> None: ...
+    @property
+    def display_unsaturated_fraction(self) -> float:
+        """
+        Fraction of pixels that must not be saturated. Display values will
+        be scaled to satisfy this value.
+
+        :rtype: float
+        """
+    @display_unsaturated_fraction.setter
+    def display_unsaturated_fraction(self, value: float) -> None: ...
     @property
     def display_update_time(self) -> float:
         """
@@ -143,26 +152,8 @@ class BayerPipeline2D(Pipeline2D):
         quiet: bool,
     ) -> None: ...
     def pixel_processor(self, x: int, y: int, slice_id: int) -> PixelProcessor: ...
-    def update(self, x: int, y: int, slice_id: int, packed_result: tuple) -> None: ...
+    def update(self, x: int, y: int, slice_id: int, packed_result: tuple[Any, ...]) -> None: ...
     def finalise(self) -> None: ...
-    def _start_display(self) -> None:
-        """
-        Display live render.
-        """
-    def _update_display(self, x: int, y: int) -> None:
-        """
-        Update live render.
-        """
-    def _refresh_display(self) -> None:
-        """
-        Refreshes the display window (if active) and frame data is present.
-
-        This method is called when display attributes are changed to refresh
-        the display according to the new settings.
-        """
-    def _render_display(self, frame: StatsArray2D, status: str | None = None) -> None: ...
-    def _generate_display_image(self, frame: StatsArray2D) -> NDArray[np.float64]: ...
-    def _calculate_white_point(self, image: NDArray[np.float64]) -> float: ...
     def display(self) -> None:
         """
         Plot the RGB frame.

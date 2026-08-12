@@ -52,13 +52,6 @@ class Interpolator1DArray(Function1D):
 
     """
 
-    x: NDArray[float64]
-    f: NDArray[float64]
-    _last_index: int
-    _extrapolation_range: float
-    _interpolator: _Interpolator1DLinear | _Interpolator1DCubic
-    _extrapolator: _Extrapolator1DLinear | _Extrapolator1DNearest | _Extrapolator1DNone | _Extrapolator1DQuadratic
-
     def __init__(
         self,
         x: ArrayLike,
@@ -82,9 +75,6 @@ class _Interpolator1D:
     :param f: 1D memory view of the function value at spline point x positions.
     """
 
-    _x: NDArray[float64]
-    _f: NDArray[float64]
-    _last_index: int
     def __init__(self, x: NDArray[float64], f: NDArray[float64]) -> None: ...
 
 class _Interpolator1DLinear(_Interpolator1D):
@@ -121,9 +111,6 @@ class _Extrapolator1D:
     :param object f: 1D array-like object of real values.
     """
 
-    _x: NDArray[float64]
-    _f: NDArray[float64]
-    _last_index: int
     def __init__(self, x: NDArray[float64], f: NDArray[float64]) -> None: ...
 
 class _Extrapolator1DNone(_Extrapolator1D):
@@ -176,9 +163,6 @@ class _ArrayDerivative1D:
     :param f: 1D memory view of the function value at spline point x positions.
     """
 
-    _x: NDArray[float64]
-    _f: NDArray[float64]
-    _last_index: int
     def __init__(self, x: NDArray[float64], f: NDArray[float64]) -> None: ...
 
 id_to_interpolator: dict[str, type[_Interpolator1D]]

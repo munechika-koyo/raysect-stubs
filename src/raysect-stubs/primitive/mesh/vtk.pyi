@@ -1,10 +1,12 @@
-from typing import Literal
+from typing import Any, Literal
+
+from numpy.typing import ArrayLike
 
 from .mesh import Mesh
 
-VTK_AUTOMATIC = "auto"
-VTK_ASCII = "ascii"
-VTK_BINARY = "binary"
+VTK_AUTOMATIC: Literal["auto"] = "auto"
+VTK_ASCII: Literal["ascii"] = "ascii"
+VTK_BINARY: Literal["binary"] = "binary"
 
 class VTKHandler:
     @classmethod
@@ -13,7 +15,7 @@ class VTKHandler:
         filename: str,
         scaling: float = 1.0,
         mode: Literal["auto", "ascii", "binary"] = VTK_AUTOMATIC,
-        **kwargs,
+        **kwargs: Any,
     ) -> Mesh:
         """
         Create a mesh instance from a VTK mesh data file (.vtk).
@@ -33,8 +35,8 @@ class VTKHandler:
         cls,
         mesh: Mesh,
         filename: str,
-        triangle_data: dict | None = None,
-        vertex_data: dict | None = None,
+        triangle_data: dict[str, ArrayLike] | None = None,
+        vertex_data: dict[str, ArrayLike] | None = None,
         mode: Literal["ascii", "binary"] = VTK_ASCII,
     ) -> None:
         """
@@ -55,7 +57,7 @@ def import_vtk(
     filename: str,
     scaling: float = 1.0,
     mode: Literal["auto", "ascii", "binary"] = VTK_AUTOMATIC,
-    **kwargs,
+    **kwargs: Any,
 ) -> Mesh:
     """
     Create a mesh instance from a VTK mesh data file (.vtk).
@@ -74,8 +76,8 @@ def import_vtk(
 def export_vtk(
     mesh: Mesh,
     filename: str,
-    triangle_data: dict | None = None,
-    vertex_data: dict | None = None,
+    triangle_data: dict[str, ArrayLike] | None = None,
+    vertex_data: dict[str, ArrayLike] | None = None,
     mode: Literal["ascii", "binary"] = VTK_ASCII,
 ) -> None:
     """

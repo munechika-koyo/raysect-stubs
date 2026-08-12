@@ -3,7 +3,7 @@ from typing import Literal
 import numpy
 from numpy.typing import NDArray
 
-from .base.sampler import FrameSampler2D
+from .base.sampler import FrameSampler2D as FrameSampler2D
 from .pipeline.mono import PowerPipeline2D, RadiancePipeline2D
 from .pipeline.rgb import RGBPipeline2D
 from .pipeline.spectral import SpectralPowerPipeline2D, SpectralRadiancePipeline2D
@@ -17,11 +17,11 @@ class FullFrameSampler2D(FrameSampler2D):
       the mask is True.
     """
 
-    def __init__(self, mask: NDArray | None = None) -> None: ...
+    def __init__(self, mask: NDArray[numpy.bool_] | None = None) -> None: ...
     @property
     def mask(self) -> NDArray[numpy.bool_]: ...
     @mask.setter
-    def mask(self, value: NDArray) -> None: ...
+    def mask(self, value: NDArray[numpy.bool_]) -> None: ...
     def generate_tasks(self, pixels: tuple[int, int]) -> list[tuple[int, int]]: ...
 
 class MonoAdaptiveSampler2D(FrameSampler2D):
@@ -57,7 +57,7 @@ class MonoAdaptiveSampler2D(FrameSampler2D):
         ratio: float = 10.0,
         min_samples: int = 1000,
         cutoff: float = 0.0,
-        mask: NDArray | None = None,
+        mask: NDArray[numpy.bool_] | None = None,
     ) -> None: ...
     @property
     def pipeline(self) -> PowerPipeline2D | RadiancePipeline2D: ...
@@ -82,9 +82,8 @@ class MonoAdaptiveSampler2D(FrameSampler2D):
     @property
     def mask(self) -> NDArray[numpy.bool_]: ...
     @mask.setter
-    def mask(self, value: NDArray) -> None: ...
+    def mask(self, value: NDArray[numpy.bool_]) -> None: ...
     def generate_tasks(self, pixels: tuple[int, int]) -> list[tuple[int, int]]: ...
-    def _full_frame(self, pixels: tuple[int, int]) -> list[tuple[int, int]]: ...
 
 class SpectralAdaptiveSampler2D(FrameSampler2D):
     """
@@ -134,7 +133,7 @@ class SpectralAdaptiveSampler2D(FrameSampler2D):
         cutoff: float = 0.0,
         reduction_method: Literal["weighted", "mean", "percentile", "power_percentile"] = "percentile",
         percentile: float = 100.0,
-        mask: NDArray | None = None,
+        mask: NDArray[numpy.bool_] | None = None,
     ) -> None: ...
     @property
     def pipeline(self) -> SpectralPowerPipeline2D | SpectralRadiancePipeline2D: ...
@@ -167,9 +166,8 @@ class SpectralAdaptiveSampler2D(FrameSampler2D):
     @property
     def mask(self) -> NDArray[numpy.bool_]: ...
     @mask.setter
-    def mask(self, value: NDArray) -> None: ...
+    def mask(self, value: NDArray[numpy.bool_]) -> None: ...
     def generate_tasks(self, pixels: tuple[int, int]) -> list[tuple[int, int]]: ...
-    def _full_frame(self, pixels: tuple[int, int]) -> list[tuple[int, int]]: ...
 
 class RGBAdaptiveSampler2D(FrameSampler2D):
     """
@@ -203,7 +201,7 @@ class RGBAdaptiveSampler2D(FrameSampler2D):
         ratio: float = 10.0,
         min_samples: int = 1000,
         cutoff: float = 0.0,
-        mask: NDArray | None = None,
+        mask: NDArray[numpy.bool_] | None = None,
     ) -> None: ...
     @property
     def pipeline(self) -> RGBPipeline2D: ...
@@ -228,6 +226,52 @@ class RGBAdaptiveSampler2D(FrameSampler2D):
     @property
     def mask(self) -> NDArray[numpy.bool_]: ...
     @mask.setter
-    def mask(self, value: NDArray) -> None: ...
+    def mask(self, value: NDArray[numpy.bool_]) -> None: ...
     def generate_tasks(self, pixels: tuple[int, int]) -> list[tuple[int, int]]: ...
-    def _full_frame(self, pixels: tuple[int, int]) -> list[tuple[int, int]]: ...
+
+class MaskedMonoAdaptiveSampler2D(MonoAdaptiveSampler2D):
+    """
+    A masked FrameSampler that dynamically adjusts a camera's pixel samples based on the noise
+    level in each pixel's power value. Deprecated in version 0.7, instead use
+    MonoAdaptiveSampler2D with `mask` attribute.
+
+    Pixels that have high noise levels will receive extra samples until the desired
+    noise threshold is achieve across the masked image.
+
+    :param PowerPipeline2D pipeline: The specific power pipeline to use for feedback control.
+    :param np.ndarray mask: The image mask array. A 2D boolean array with
+      the same shape as the frame. The tasks are generated only for those pixels for which
+      the mask is True.
+    :param int min_samples: Minimum number of pixel samples across the image before
+      turning on adaptive sampling (default=1000).
+    :param double cutoff: Normalised noise threshold at which extra sampling will be aborted and
+      rendering will complete (default=0.0). The standard error is normalised to 1 so that a
+      cutoff of 0.01 corresponds to 1% standard error.
+    """
+
+    def __init__(
+        self,
+        pipeline: PowerPipeline2D | RadiancePipeline2D,
+        mask: NDArray[numpy.bool_],
+        min_samples: int = 1000,
+        cutoff: float = 0.0,
+    ) -> None: ...
+
+class MaskedRGBAdaptiveSampler2D(RGBAdaptiveSampler2D):
+    """
+    A masked FrameSampler that dynamically adjusts a camera's pixel samples based on the noise
+    level in each RGB pixel value. Deprecated in version 0.7, instead use MonoAdaptiveSampler2D
+    with `mask` attribute.
+
+    Pixels that have high noise levels will receive extra samples until the desired
+    noise threshold is achieve across the whole image.
+
+    :param RGBPipeline2D pipeline: The specific RGB pipeline to use for feedback control.
+    :param np.ndarray mask: The image mask array.
+    :param int min_samples: Minimum number of pixel samples across the image before
+      turning on adaptive sampling (default=1000).
+    :param double cutoff: Noise threshold at which extra sampling will be aborted and
+      rendering will complete (default=0.0).
+    """
+
+    def __init__(self, pipeline: RGBPipeline2D, mask: NDArray[numpy.bool_], min_samples: int = 1000, cutoff: float = 0.0) -> None: ...

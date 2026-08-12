@@ -1,20 +1,5 @@
 from collections.abc import Iterable, Iterator
 
-class _Item:
-    """
-    Internal item class for holding individual LinkedList items with references to neighbors.
-
-    :param _Item previous: Reference to the previous container item, will be None if this is the first item.
-    :param object value: The object to be stored as this item value.
-    :param _Item next_item: Reference to the next container item, will be None if this is the last item.
-    """
-
-    previous: _Item
-    value: object
-    next_item: _Item | None
-
-    def __init__(self, previous: _Item, value: object, next_item: _Item | None = None) -> None: ...
-
 class LinkedList:
     """
     Basic implementation of a Linked List for fast container operations in cython.
@@ -27,11 +12,9 @@ class LinkedList:
     """
 
     length: int
-    first: _Item | None
-    last: _Item | None
 
     def __init__(self, initial_items: Iterable[object] | None = None) -> None: ...
-    def __getitem__(self, item: int) -> object: ...
+    def __getitem__(self, item: int, /) -> object: ...
     def __iter__(self) -> Iterator[object] | None: ...
     def is_empty(self) -> bool:
         """Returns True if the container is empty."""

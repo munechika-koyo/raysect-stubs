@@ -13,9 +13,9 @@ class _Vec3:
         If no initial values are passed, _Vec3 defaults to a unit vector
         aligned with the z-axis: _Vec(0.0, 0.0, 1.0)
         """
-    def __getitem__(self, index: int) -> float:
+    def __getitem__(self, index: int, /) -> float:
         """Returns the vector coordinates by index ([0,1,2] -> [x,y,z])."""
-    def __setitem__(self, index: int, value: float) -> None:
+    def __setitem__(self, index: int, value: float, /) -> None:
         """Sets the vector coordinates by index ([0,1,2] -> [x,y,z])."""
     def __iter__(self) -> Iterator[float]:
         """Implement iter(self)."""
@@ -34,7 +34,7 @@ class _Vec3:
         """
     @length.setter
     def length(self, value: float) -> None: ...
-    def dot(self, b: _Vec3) -> float:
+    def dot(self, v: _Vec3) -> float:
         """
         Calculates the dot product between this vector and the supplied vector.
 
@@ -47,7 +47,7 @@ class _Vec3:
             >>> a.dot(b)
             1.0
         """
-    def angle(self, b: _Vec3) -> float:
+    def angle(self, v: _Vec3) -> float:
         """
         Calculates the angle between this vector and the supplied vector.
 

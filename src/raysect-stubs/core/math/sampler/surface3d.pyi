@@ -15,6 +15,7 @@ class SurfaceSampler3D:
     def __call__(self, samples: None = None, pdf: Literal[True] = True) -> tuple[Point3D, float]: ...
     @overload
     def __call__(self, samples: int, pdf: Literal[True] = True) -> list[tuple[Point3D, float]]: ...
+    @overload
     def __call__(self, samples: int | None = None, pdf: bool = False) -> Point3D | tuple[Point3D, float] | list[Point3D] | list[tuple[Point3D, float]]:
         """
         If samples is not provided, returns a single Point3D sample from
@@ -47,7 +48,6 @@ class DiskSampler3D(SurfaceSampler3D):
 
     radius: float
     area: float
-    _area_inv: float
 
     def __init__(self, radius: float = 1.0) -> None: ...
 
@@ -71,9 +71,6 @@ class RectangleSampler3D(SurfaceSampler3D):
     width: float
     height: float
     area: float
-    _area_inv: float
-    _width_offset: float
-    _height_offset: float
 
     def __init__(self, width: float = 1.0, height: float = 1.0) -> None: ...
 
@@ -98,10 +95,6 @@ class TriangleSampler3D(SurfaceSampler3D):
 
     """
 
-    v1: Point3D
-    v2: Point3D
-    v3: Point3D
     area: float
-    _area_inv: float
 
     def __init__(self, v1: Point3D, v2: Point3D, v3: Point3D) -> None: ...

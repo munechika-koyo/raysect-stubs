@@ -1,8 +1,10 @@
+from typing import Any
+
 from .mesh import Mesh
 
 class OBJHandler:
     @classmethod
-    def import_obj(cls, filename: str, scaling: float = 1.0, **kwargs) -> Mesh:
+    def import_obj(cls, filename: str, scaling: float = 1.0, **kwargs: Any) -> Mesh:
         """
         Create a mesh instance from a Wavefront OBJ mesh file (.obj).
 
@@ -40,7 +42,7 @@ class OBJHandler:
             >>> export_obj(bunny_mesh, 'my_mesh.obj')
         """
 
-def import_obj(filename: str, scaling: float = 1.0, **kwargs) -> Mesh:
+def import_obj(filename: str, scaling: float = 1.0, **kwargs: Any) -> Mesh:
     """
     Create a mesh instance from a Wavefront OBJ mesh file (.obj).
 

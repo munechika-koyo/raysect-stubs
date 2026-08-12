@@ -22,6 +22,4 @@ class Constant1D(Function1D):
     :param float value: the constant value to return when called
     """
 
-    _value: float
-
     def __init__(self, value: float) -> None: ...

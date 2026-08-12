@@ -17,10 +17,6 @@ class Blend1D(Function1D):
     value exceeds the required range.
     """
 
-    _f1: Function1D
-    _f2: Function1D
-    _mask: Function1D
-
     def __init__(
         self,
         f1: float | Function1D | Callable[[float], float],

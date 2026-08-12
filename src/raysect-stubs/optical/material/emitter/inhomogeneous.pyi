@@ -1,5 +1,3 @@
-from abc import abstractmethod
-
 from ....core import Primitive
 from ....core.math import AffineMatrix3D, Point3D, Vector3D
 from ... import Ray, Spectrum, World
@@ -12,7 +10,6 @@ class VolumeIntegrator:
     The deriving class must implement the integrate() method.
     """
 
-    @abstractmethod
     def integrate(
         self,
         spectrum: Spectrum,
@@ -55,8 +52,6 @@ class NumericalIntegrator(VolumeIntegrator):
       range (default=5).
     """
 
-    _step: float
-    _min_samples: int
     def __init__(self, step: float, min_samples: int = 5) -> None: ...
     @property
     def step(self) -> float: ...

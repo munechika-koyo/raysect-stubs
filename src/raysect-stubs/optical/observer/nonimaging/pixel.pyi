@@ -1,7 +1,6 @@
 from ....core.math import AffineMatrix3D
 from ....core.scenegraph._nodebase import _NodeBase
 from ....core.workflow import RenderEngine
-from ... import Ray
 from ..base import Observer0D, Pipeline0D
 
 class Pixel(Observer0D):
@@ -95,6 +94,3 @@ class Pixel(Observer0D):
 
         :rtype: float
         """
-
-    def _generate_rays(self, template: Ray, ray_count: int) -> list[tuple[Ray, float]]: ...
-    def _pixel_sensitivity(self) -> float: ...

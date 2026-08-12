@@ -9,7 +9,6 @@ class Exp1D(Function1D):
     :param Function1D function: A Function1D object.
     """
 
-    _function: Function1D
     def __init__(self, function: float | Function1D | Callable[[float], float]) -> None: ...
 
 class Sin1D(Function1D):
@@ -19,7 +18,6 @@ class Sin1D(Function1D):
     :param Function1D function: A Function1D object.
     """
 
-    _function: Function1D
     def __init__(self, function: float | Function1D | Callable[[float], float]) -> None: ...
 
 class Cos1D(Function1D):
@@ -29,7 +27,6 @@ class Cos1D(Function1D):
     :param Function1D function: A Function1D object.
     """
 
-    _function: Function1D
     def __init__(self, function: float | Function1D | Callable[[float], float]) -> None: ...
 
 class Tan1D(Function1D):
@@ -39,7 +36,6 @@ class Tan1D(Function1D):
     :param Function1D function: A Function1D object.
     """
 
-    _function: Function1D
     def __init__(self, function: float | Function1D | Callable[[float], float]) -> None: ...
 
 class Asin1D(Function1D):
@@ -48,8 +44,6 @@ class Asin1D(Function1D):
 
     :param Function1D function: A Function1D object.
     """
-
-    _function: Function1D
 
     def __init__(self, function: float | Function1D | Callable[[float], float]) -> None: ...
 
@@ -60,8 +54,6 @@ class Acos1D(Function1D):
     :param Function1D function: A Function1D object.
     """
 
-    _function: Function1D
-
     def __init__(self, function: float | Function1D | Callable[[float], float]) -> None: ...
 
 class Atan1D(Function1D):
@@ -70,8 +62,6 @@ class Atan1D(Function1D):
 
     :param Function1D function: A Function1D object.
     """
-
-    _function: Function1D
 
     def __init__(self, function: float | Function1D | Callable[[float], float]) -> None: ...
 
@@ -86,8 +76,6 @@ class Atan4Q1D(Function1D):
     :param Function1D denominator: A Function1D object representing the denominator
     """
 
-    _numerator: Function1D
-    _denominator: Function1D
     def __init__(
         self,
         numerator: float | Function1D | Callable[[float], float],
@@ -101,7 +89,6 @@ class Sqrt1D(Function1D):
     :param Function1D function: A Function1D object.
     """
 
-    _function: Function1D
     def __init__(self, function: float | Function1D | Callable[[float], float]) -> None: ...
 
 class Erf1D(Function1D):
@@ -111,5 +98,4 @@ class Erf1D(Function1D):
     :param Function1D function: A Function1D object.
     """
 
-    _function: Function1D
     def __init__(self, function: float | Function1D | Callable[[float], float]) -> None: ...

@@ -1,5 +1,3 @@
-from abc import abstractmethod
-
 from ...core.intersection import Intersection
 from ...core.material import Material as CoreMaterial
 from ...core.math import AffineMatrix3D, Normal3D, Point3D, Vector3D
@@ -26,7 +24,6 @@ class Material(CoreMaterial):
         """
     @importance.setter
     def importance(self, value: float) -> None: ...
-    @abstractmethod
     def evaluate_surface(
         self,
         world: World,
@@ -61,7 +58,6 @@ class Material(CoreMaterial):
           from local primitive space to world space.
         :param Intersection intersection: The full ray-primitive intersection object.
         """
-    @abstractmethod
     def evaluate_volume(
         self, spectrum: Spectrum, world: World, ray: Ray, primitive: Primitive, start_point: Point3D, end_point: Point3D, world_to_primitive: AffineMatrix3D, primitive_to_world: AffineMatrix3D
     ) -> Spectrum:
@@ -150,21 +146,20 @@ class DiscreteBSDF(Material):
     """
     A base class for materials implementing a discrete BSDF.
     """
-    def evaluate_surface(
+    def evaluate_surface(  # pyrefly: ignore [bad-override-param-name]
         self,
         world: World,
         ray: Ray,
         primitive: Primitive,
-        hit_point: Point3D,
+        p_hit_point: Point3D,
         exiting: bool,
-        inside_point: Point3D,
-        outside_point: Point3D,
-        normal: Normal3D,
+        p_inside_point: Point3D,
+        p_outside_point: Point3D,
+        p_normal: Normal3D,
         world_to_primitive: AffineMatrix3D,
         primitive_to_world: AffineMatrix3D,
         intersection: Intersection,
     ) -> Spectrum: ...
-    @abstractmethod
     def evaluate_shading(
         self,
         world: World,
@@ -183,25 +178,22 @@ class ContinuousBSDF(Material):
     A base class for materials implementing a continuous BSDF.
     """
 
-    def evaluate_surface(
+    def evaluate_surface(  # pyrefly: ignore [bad-override-param-name]
         self,
         world: World,
         ray: Ray,
         primitive: Primitive,
-        hit_point: Point3D,
+        p_hit_point: Point3D,
         exiting: bool,
-        inside_point: Point3D,
-        outside_point: Point3D,
-        normal: Normal3D,
+        p_inside_point: Point3D,
+        p_outside_point: Point3D,
+        p_normal: Normal3D,
         world_to_primitive: AffineMatrix3D,
         primitive_to_world: AffineMatrix3D,
         intersection: Intersection,
     ) -> Spectrum: ...
-    @abstractmethod
     def pdf(self, s_incoming: Vector3D, s_outgoing: Vector3D, back_face: bool) -> float: ...
-    @abstractmethod
     def sample(self, s_incoming: Vector3D, back_face: bool) -> Vector3D: ...
-    @abstractmethod
     def evaluate_shading(
         self,
         world: World,
@@ -215,15 +207,14 @@ class ContinuousBSDF(Material):
         surface_to_world: AffineMatrix3D,
         intersection: Intersection,
     ) -> Spectrum: ...
-    @abstractmethod
     def bsdf(self, s_incident: Vector3D, s_reflected: Vector3D, wavelength: float) -> float:
-        """
+        r"""
         Returns the surface bi-directional scattering distribution function (BSDF).
 
         The BSDF is calculated for the given wavelength, incoming and outgoing surface space directions.
 
-        :param Vector3D s_incident: The surface space incident vector, :math:`\\omega_i`.
-        :param Vector3D s_reflected: The surface space reflected vector, :math:`\\omega_o`.
-        :param float wavelength: The wavelength :math:`\\lambda` at which to perform the BSDF evaluation.
-        :return: The BSDF value, :math:`BSDF(\\omega_i, \\omega_o, \\lambda)`
+        :param Vector3D s_incident: The surface space incident vector, :math:`\omega_i`.
+        :param Vector3D s_reflected: The surface space reflected vector, :math:`\omega_o`.
+        :param float wavelength: The wavelength :math:`\lambda` at which to perform the BSDF evaluation.
+        :return: The BSDF value, :math:`BSDF(\omega_i, \omega_o, \lambda)`
         """

@@ -1,5 +1,3 @@
-from abc import abstractmethod
-
 from _typeshed import StrOrBytesPath, SupportsRead, SupportsWrite
 
 from ...boundingbox import BoundingBox2D
@@ -63,10 +61,6 @@ class KDTree2DCore:
         :param point: A Point2D object.
         :return: A list of ids (indices) of the items containing the point
         """
-    def __dealloc__(self) -> None:
-        """
-        Frees the memory allocated to store the kd-Tree.
-        """
     def save(self, file: StrOrBytesPath | SupportsWrite[bytes]) -> None: ...
     def load(self, file: StrOrBytesPath | SupportsRead[bytes]) -> None: ...
 
@@ -84,7 +78,6 @@ class KDTree2D(KDTree2DCore):
     :param double empty_bonus: The bonus applied to node splits that generate empty leaves (default 0.2).
     """
 
-    @abstractmethod
     def _is_contained_items(self, item_ids: list[int], point: Point2D) -> bool:
         """
         Tests each item in the list to identify if any enclose the point.
@@ -102,7 +95,6 @@ class KDTree2D(KDTree2DCore):
         :param point: Point2D to evaluate.
         :return: True if the point lies inside an item, false otherwise.
         """
-    @abstractmethod
     def _items_containing_items(self, item_ids: list[int], point: Point2D) -> list[int]:
         """
         Tests each item in the list to identify if they enclose the point.

@@ -83,7 +83,7 @@ class AffineMatrix3D(_Mat4):
     """
     def __repr__(self) -> str:
         """String representation."""
-    def __mul__(self, y: AffineMatrix3D) -> AffineMatrix3D:
+    def __mul__(self, y: AffineMatrix3D, /) -> AffineMatrix3D:
         """Multiplication operator.
 
         >>> from raysect.core import translate, rotate_x

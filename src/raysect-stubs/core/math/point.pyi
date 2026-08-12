@@ -33,16 +33,14 @@ class Point2D:
     def __init__(self, x: float = 0.0, y: float = 0.0) -> None: ...
     def __repr__(self) -> str:
         """Returns a string representation of the Point2D object."""
-    def __richcmp__(self, other: Point2D, op: int) -> bool:
-        """Rich comparison operator."""
-    def __getitem__(self, index: int) -> float:
+    def __getitem__(self, index: int, /) -> float:
         """Returns the point coordinates by index ([0,1] -> [x,y]).
 
         >>> a = Point2D(1, 0)
         >>> a[0]
         1
         """
-    def __setitem__(self, index: int, value: float) -> None:
+    def __setitem__(self, index: int, value: float, /) -> None:
         """Sets the point coordinates by index ([0,1] -> [x,y]).
 
         >>> a = Point2D(1, 0)
@@ -59,18 +57,19 @@ class Point2D:
         (1.0, 1.0)
 
         """
-    def __add__(self, y: Vector2D) -> Point2D:
+    def __add__(self, y: Vector2D, /) -> Point2D:
         """Addition operator.
 
         >>> Point2D(1, 0) + Vector2D(0, 1)
         Point2D(1.0, 1.0)
         """
-    def __sub__(self, y: Vector2D) -> Point2D:
+    def __sub__(self, y: Vector2D, /) -> Point2D:
         """Subtraction operator.
 
         >>> Point2D(1, 0) - Vector2D(0, 1)
         Point2D(1.0, -1.0)
         """
+    def __rmul__(self, x: AffineMatrix3D, /) -> Point2D: ...
     def vector_to(self, p: Point2D) -> Vector2D:
         """
         Returns a vector from this point to the passed point.
@@ -146,16 +145,14 @@ class Point3D:
     def __init__(self, x: float = 0.0, y: float = 0.0, z: float = 0.0) -> None: ...
     def __repr__(self) -> str:
         """Returns a string representation of the Point3D object."""
-    def __richcmp__(self, other: Point3D, op: int) -> bool:
-        """Provides basic point comparison operations."""
-    def __getitem__(self, index: int) -> float:
+    def __getitem__(self, index: int, /) -> float:
         """Returns the point coordinates by index ([0,1,2] -> [x,y,z]).
 
         >>> a = Point3D(1, 0, 0)
         >>> a[0]
         1
         """
-    def __setitem__(self, index: int, value: float) -> None:
+    def __setitem__(self, index: int, value: float, /) -> None:
         """Sets the point coordinates by index ([0,1,2] -> [x,y,z]).
 
         >>> a = Point3D(1, 0, 0)
@@ -171,19 +168,19 @@ class Point3D:
         >>> x, y, z
         (0.0, 1.0, 2.0)
         """
-    def __add__(self, y: _Vec3) -> Point3D:
+    def __add__(self, y: _Vec3, /) -> Point3D:
         """Addition operator.
 
         >>> Point3D(1, 0, 0) + Vector3D(0, 1, 0)
         Point3D(1.0, 1.0, 0.0)
         """
-    def __sub__(self, y: _Vec3) -> Point3D:
+    def __sub__(self, y: _Vec3, /) -> Point3D:
         """Subtraction operator.
 
         >>> Point3D(1, 0, 0) - Vector3D(0, 1, 0)
         Point3D(1.0, -1.0, 0.0)
         """
-    def __rmul__(self, x: AffineMatrix3D) -> Point3D:
+    def __rmul__(self, x: AffineMatrix3D, /) -> Point3D:
         """Multiplication operator.
 
         :param AffineMatrix3D x: transformation matrix x

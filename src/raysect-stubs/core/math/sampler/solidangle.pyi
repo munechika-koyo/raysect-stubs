@@ -1,4 +1,3 @@
-from abc import abstractmethod
 from typing import Literal, overload
 
 from ..vector import Vector3D
@@ -15,6 +14,7 @@ class SolidAngleSampler:
     def __call__(self, samples: None = None, pdf: Literal[True] = True) -> tuple[Vector3D, float]: ...
     @overload
     def __call__(self, samples: int, pdf: Literal[True] = True) -> list[tuple[Vector3D, float]]: ...
+    @overload
     def __call__(self, samples: int | None = None, pdf: bool = False) -> Vector3D | tuple[Vector3D, float] | list[Vector3D] | list[tuple[Vector3D, float]]:
         """
         If samples is not provided, returns a single Vector3D sample from
@@ -28,7 +28,6 @@ class SolidAngleSampler:
         :param bool pdf: Toggle for returning associated sample pdfs (default=False).
         :return: A Vector3D, tuple or list of Vector3D objects.
         """
-    @abstractmethod
     def pdf(self, sample: Vector3D) -> float:
         """
         Generates a pdf for a given sample value.
@@ -102,10 +101,6 @@ class ConeUniformSampler(SolidAngleSampler):
     """
 
     angle: float
-    _angle_radians: float
-    _angle_cosine: float
-    _solid_angle: float
-    _solid_angle_inv: float
 
     def __init__(self, angle: float = 45) -> None: ...
     def pdf(self, sample: Vector3D) -> float: ...

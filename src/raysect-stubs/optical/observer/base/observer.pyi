@@ -1,16 +1,10 @@
-from numpy import uint64
-
 from ....core.math import AffineMatrix3D
 from ....core.scenegraph import Observer
 from ....core.scenegraph._nodebase import _NodeBase
-from ....core.workflow import MulticoreEngine, RenderEngine
-from ... import Ray
+from ....core.workflow import RenderEngine
+from ...ray import Ray
 from .pipeline import Pipeline0D, Pipeline1D, Pipeline2D
-from .processor import PixelProcessor
 from .sampler import FrameSampler1D, FrameSampler2D
-from .slice import SpectralSlice
-
-DEFAULT_ENGINE = MulticoreEngine()
 
 class _ObserverBase(Observer):
     """
@@ -52,7 +46,7 @@ class _ObserverBase(Observer):
         parent: _NodeBase | None = None,
         transform: AffineMatrix3D | None = None,
         name: str | None = None,
-        render_engine: RenderEngine = DEFAULT_ENGINE,
+        render_engine: RenderEngine = ...,
         spectral_rays: int = 1,
         spectral_bins: int = 15,
         min_wavelength: float = 375.0,
@@ -147,92 +141,6 @@ class _ObserverBase(Observer):
     def observe(self) -> None:
         """Ask this Camera to Observe its world."""
 
-    def _slice_spectrum(self) -> list[SpectralSlice]:
-        """
-        Sub-divides the spectral range into smaller wavelength slices.
-
-        In dispersive rendering, where multiple rays are launched across the full spectral range, each ray samples a small
-        portion of the spectrum. A slice defines a sub region of the spectral range that is sampled
-        by launching a ray.
-
-        :return: A list of SpectralSlice objects.
-        """
-    def _generate_templates(self, slices: list[SpectralSlice]) -> list[Ray]: ...
-    def _render_pixel(self, task: tuple, slice_id: int, template: Ray) -> tuple[tuple, list[tuple], int]:
-        """
-        - passed in are ray_template and pipeline object references
-        - unpack task ID (pixel id)
-        - launch the rays and sample pixel using pixel_sampler() and ray_template,
-        returns a frame 1D object representing a spectrum with variance and sample count
-        for each bin.
-        - passes frame 1D to each pipeline object for pixel processing. Each of those
-        returns a custom tuple of data tied to details of that pipeline.
-        - All results packaged together with pixel ID and returned to consumer.
-        :return:
-        """
-    def _update_state(self, packed_result: tuple[tuple, list[tuple], int], slice_id: int) -> None:
-        """
-        - unpack task configuration and pipeline result tuples.
-        - pass results to each pipeline to update pipelines internal state
-        - print workflow statistics and any statistics for each pipeline.
-        - display visual imagery for each pipeline as required
-        - save state for each pipeline as required.
-
-        :return:
-        """
-    def _generate_tasks(self) -> list[tuple]: ...
-    def _obtain_pixel_processors(self, task: tuple, slice_id: int) -> list: ...
-    def _initialise_pipelines(
-        self,
-        min_wavelength: float,
-        max_wavelength: float,
-        spectral_bins: int,
-        slices: list[SpectralSlice],
-        quiet: bool,
-    ) -> None: ...
-    def _update_pipelines(self, task: tuple, results: list, slice_id: int) -> None: ...
-    def _finalise_pipelines(self) -> None: ...
-    def _initialise_statistics(self, tasks: list[tuple]) -> None:
-        """
-        Initialise statistics.
-        """
-    def _update_statistics(self, sample_ray_count: uint64) -> None:
-        """
-        Display progress statistics.
-        """
-
-    def _finalise_statistics(self) -> None:
-        """
-        Final statistics output.
-        """
-    def _obtain_rays(self, task: tuple, template: Ray) -> list[tuple[Ray, float]]:
-        """
-        Returns a list of Rays that sample over the sensitivity of the pixel.
-
-        This is a virtual method to be implemented by derived classes.
-
-        Runs during the observe() loop to generate the rays. Allows observers
-        to customise how they launch rays.
-
-        This method must return a list of tuples, with each tuple containing
-        a Ray object and a corresponding weighting, typically the projected
-        area/direction cosine.
-
-        If the projected area weight is not required (due to the ray sampling
-        algorithm taking the weighting into account in the distribution e.g.
-        cosine weighted) then the weight should be set to 1.0.
-
-        :param tuple task: The render task configuration.
-        :param Ray template: The template ray from which all rays should be generated.
-        :return list: A list of tuples of (ray, weight)
-        """
-    def _obtain_sensitivity(self, task: tuple) -> float:
-        """
-
-        :param pixel_id:
-        :return:
-        """
-
 class Observer0D(_ObserverBase):
     """
     0D observer base class.
@@ -257,7 +165,7 @@ class Observer0D(_ObserverBase):
         parent: _NodeBase | None = None,
         transform: AffineMatrix3D | None = None,
         name: str | None = None,
-        render_engine: RenderEngine = DEFAULT_ENGINE,
+        render_engine: RenderEngine = ...,
         spectral_rays: int = 1,
         spectral_bins: int = 15,
         min_wavelength: float = 375.0,
@@ -298,20 +206,6 @@ class Observer0D(_ObserverBase):
         """
     @pipelines.setter
     def pipelines(self, value: list[Pipeline0D]) -> None: ...
-    def _generate_tasks(self) -> list[tuple[int, None]]: ...
-    def _obtain_pixel_processors(self, task: tuple[int, None], slice_id: int) -> list[PixelProcessor]: ...
-    def _initialise_pipelines(
-        self,
-        min_wavelength: float,
-        max_wavelength: float,
-        spectral_bins: int,
-        slices: list[SpectralSlice],
-        quiet: bool,
-    ) -> None: ...
-    def _update_pipelines(self, task: tuple[int, None], results: list, slice_id: int) -> None: ...
-    def _finalise_pipelines(self) -> None: ...
-    def _obtain_rays(self, task: tuple[int, None], template: Ray) -> list[tuple[Ray, float]]: ...
-    def _obtain_sensitivity(self, task: tuple[int, None]) -> float: ...
     def _generate_rays(self, template: Ray, ray_count: int) -> list[tuple[Ray, float]]:
         """
         Generate a list of Rays that sample over the sensitivity of the pixel.
@@ -369,7 +263,7 @@ class Observer1D(_ObserverBase):
         parent: _NodeBase | None = None,
         transform: AffineMatrix3D | None = None,
         name: str | None = None,
-        render_engine: RenderEngine = DEFAULT_ENGINE,
+        render_engine: RenderEngine = ...,
         spectral_rays: int = 1,
         spectral_bins: int = 15,
         min_wavelength: float = 375.0,
@@ -417,20 +311,6 @@ class Observer1D(_ObserverBase):
         """
     @pipelines.setter
     def pipelines(self, value: list[Pipeline1D]) -> None: ...
-    def _generate_tasks(self) -> list[tuple[int]]: ...
-    def _obtain_pixel_processors(self, task: tuple[int], slice_id: int) -> list[PixelProcessor]: ...
-    def _initialise_pipelines(
-        self,
-        min_wavelength: float,
-        max_wavelength: float,
-        spectral_bins: int,
-        slices: list[SpectralSlice],
-        quiet: bool,
-    ) -> None: ...
-    def _update_pipelines(self, task: tuple[int], results: list, slice_id: int) -> None: ...
-    def _finalise_pipelines(self) -> None: ...
-    def _obtain_rays(self, task: tuple[int], template: Ray) -> list[tuple[Ray, float]]: ...
-    def _obtain_sensitivity(self, task: tuple[int]) -> float: ...
     def _generate_rays(self, pixel: int, template: Ray, ray_count: int) -> list[tuple[Ray, float]]:
         """
         Generate a list of Rays that sample over the sensitivity of the pixel.
@@ -490,7 +370,7 @@ class Observer2D(_ObserverBase):
         parent: _NodeBase | None = None,
         transform: AffineMatrix3D | None = None,
         name: str | None = None,
-        render_engine: RenderEngine = DEFAULT_ENGINE,
+        render_engine: RenderEngine = ...,
         spectral_rays: int = 1,
         spectral_bins: int = 15,
         min_wavelength: float = 375.0,
@@ -538,20 +418,6 @@ class Observer2D(_ObserverBase):
         """
     @pipelines.setter
     def pipelines(self, value: list[Pipeline2D]) -> None: ...
-    def _generate_tasks(self) -> list[tuple[int, int]]: ...
-    def _obtain_pixel_processors(self, task: tuple[int, int], slice_id: int) -> list[PixelProcessor]: ...
-    def _initialise_pipelines(
-        self,
-        min_wavelength: float,
-        max_wavelength: float,
-        spectral_bins: int,
-        slices: list[SpectralSlice],
-        quiet: bool,
-    ) -> None: ...
-    def _update_pipelines(self, task: tuple[int, int], results: list, slice_id: int) -> None: ...
-    def _finalise_pipelines(self) -> None: ...
-    def _obtain_rays(self, task: tuple[int, int], template: Ray) -> list[tuple[Ray, float]]: ...
-    def _obtain_sensitivity(self, task: tuple[int, int]) -> float: ...
     def _generate_rays(self, x: int, y: int, template: Ray, ray_count: int) -> list[tuple[Ray, float]]:
         """
         Generate a list of Rays that sample over the sensitivity of the pixel.

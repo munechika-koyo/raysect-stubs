@@ -12,7 +12,7 @@ class Quaternion:
     def __init__(self, x: float = 0.0, y: float = 0.0, z: float = 0.0, s: float = 1.0) -> None: ...
     def __repr__(self) -> str:
         """Returns a string representation of the Quaternion object."""
-    def __getitem__(self, i: int) -> float:
+    def __getitem__(self, i: int, /) -> float:
         """Returns the quaternion coordinates by index ([0,1,2,3] -> [x,y,z,s]).
 
         .. code-block:: pycon
@@ -21,7 +21,7 @@ class Quaternion:
             >>> a[3]
             1
         """
-    def __setitem__(self, i: int, value: float) -> None:
+    def __setitem__(self, i: int, value: float, /) -> None:
         """Sets the quaternion coordinates by index ([0,1,2,3] -> [x,y,z,s]).
 
         .. code-block:: pycon
@@ -62,7 +62,7 @@ class Quaternion:
             >>> Quaternion(0, 0, 0, 1) == Quaternion(0, 0, 0, 1)
             True
         """
-    def __add__(self, y: Quaternion) -> Quaternion:
+    def __add__(self, y: Quaternion, /) -> Quaternion:
         """
         Addition operator.
 
@@ -71,7 +71,7 @@ class Quaternion:
             >>> Quaternion(0, 0, 0, 1) + Quaternion(0, 1, 0, 0)
             Quaternion(0.0, 1.0, 0.0, 1.0)
         """
-    def __sub__(self, y: Quaternion) -> Quaternion:
+    def __sub__(self, y: Quaternion, /) -> Quaternion:
         """Subtraction operator.
 
         .. code-block:: pycon
@@ -79,7 +79,7 @@ class Quaternion:
             >>> Quaternion(0, 0, 0, 1) - Quaternion(0, 1, 0, 0)
             Quaternion(0.0, -1.0, 0, 1.0)
         """
-    def __mul__(self, y: float | Quaternion) -> Quaternion:
+    def __mul__(self, y: float | Quaternion, /) -> Quaternion:
         """Multiplication operator.
 
         .. code-block:: pycon
@@ -89,7 +89,7 @@ class Quaternion:
             >>> Quaternion(0, 1, 0, 1) * Quaternion(1, 2, 3, 0)
             Quaternion(4.0, 2.0, 2.0, -2.0)
         """
-    def __rmul__(self, y: float) -> Quaternion:
+    def __rmul__(self, y: float, /) -> Quaternion:
         """Reverse multiplication operator.
 
         .. code-block:: pycon
@@ -97,7 +97,7 @@ class Quaternion:
             >>> 2 * Quaternion(0, 0, 1, 1)
             Quaternion(0.0, 0.0, 2.0, 2.0)
         """
-    def __truediv__(self, y: float | Quaternion) -> Quaternion:
+    def __truediv__(self, y: float | Quaternion, /) -> Quaternion:
         """Division operator.
 
         .. code-block:: pycon
@@ -192,7 +192,7 @@ class Quaternion:
                            [0.0, 1.0, 0.0, 0.0],
                            [0.0, 0.0, 0.0, 1.0]])
         """
-    def quaternion_to(self, q2: Quaternion) -> Quaternion:
+    def quaternion_to(self, q: Quaternion) -> Quaternion:
         """
         Calculates the quaternion between quaternions.
 

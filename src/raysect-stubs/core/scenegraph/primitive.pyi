@@ -1,5 +1,3 @@
-from abc import abstractmethod
-
 from ..boundingbox import BoundingBox3D
 from ..boundingsphere import BoundingSphere3D
 from ..intersection import Intersection
@@ -28,13 +26,12 @@ class Primitive(Node):
     @property
     def material(self) -> Material:
         """
-        The material assigned to this primitive.
+        The material class for this primitive.
 
         :rtype: Material
         """
     @material.setter
     def material(self, value: Material) -> None: ...
-    @abstractmethod
     def hit(self, ray: Ray) -> Intersection | None:
         """
         Virtual method - to be implemented by derived classes.
@@ -51,7 +48,6 @@ class Primitive(Node):
         :return: An Intersection object or None if no intersection occurs.
         :rtype: Intersection
         """
-    @abstractmethod
     def next_intersection(self) -> Intersection | None:
         """
         Virtual method - to be implemented by derived classes.
@@ -76,8 +72,7 @@ class Primitive(Node):
 
         :rtype: Intersection
         """
-    @abstractmethod
-    def contains(self, point: Point3D) -> bool:
+    def contains(self, p: Point3D) -> bool:
         """
         Virtual method - to be implemented by derived classes.
 
@@ -88,7 +83,6 @@ class Primitive(Node):
         :return: True if the Point3D is enclosed by the primitive surface, False otherwise.
         :rtype: bool
         """
-    @abstractmethod
     def bounding_box(self) -> BoundingBox3D:
         """
         Virtual method - to be implemented by derived classes.
@@ -125,7 +119,6 @@ class Primitive(Node):
         :return: A world space BoundingSphere3D object.
         :rtype: BoundingSphere3D
         """
-    @abstractmethod
     def instance(self, parent: Node | None = None, transform: AffineMatrix3D | None = None, material: Material | None = None, name: str | None = None) -> Primitive:
         """
         Returns a new instance of the primitive with the same geometry.

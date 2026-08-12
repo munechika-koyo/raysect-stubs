@@ -1,10 +1,10 @@
-from typing import Literal
+from typing import Any, Literal
 
 from .mesh import Mesh
 
-PLY_AUTOMATIC = "auto"
-PLY_ASCII = "ascii"
-PLY_BINARY = "binary"
+PLY_AUTOMATIC: Literal["auto"] = "auto"
+PLY_ASCII: Literal["ascii"] = "ascii"
+PLY_BINARY: Literal["binary"] = "binary"
 
 class PLYHandler:
     @classmethod
@@ -13,7 +13,7 @@ class PLYHandler:
         filename: str,
         scaling: float = 1.0,
         mode: Literal["auto", "ascii", "binary"] = PLY_AUTOMATIC,
-        **kwargs,
+        **kwargs: Any,
     ) -> Mesh:
         """
         Create a mesh instance from a Polygon File Format (PLY) mesh file (.ply).
@@ -72,7 +72,7 @@ def import_ply(
     filename: str,
     scaling: float = 1.0,
     mode: Literal["auto", "ascii", "binary"] = PLY_AUTOMATIC,
-    **kwargs,
+    **kwargs: Any,
 ) -> Mesh:
     """
     Create a mesh instance from a Polygon File Format (PLY) mesh file (.ply).

@@ -1,7 +1,6 @@
 from ....core.math import AffineMatrix3D
 from ....core.scenegraph import Primitive
 from ....core.scenegraph._nodebase import _NodeBase
-from ... import Ray
 from ..base import Observer2D, Pipeline2D
 
 class TargetedCCDArray(Observer2D):
@@ -84,5 +83,3 @@ class TargetedCCDArray(Observer2D):
         """
     @targeted_path_prob.setter
     def targeted_path_prob(self, value: float) -> None: ...
-    def _generate_rays(self, x: int, y: int, template: Ray, ray_count: int) -> list[tuple[Ray, float]]: ...
-    def _pixel_sensitivity(self, x: int, y: int) -> float: ...

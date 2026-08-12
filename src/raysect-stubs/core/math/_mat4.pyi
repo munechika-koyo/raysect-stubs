@@ -5,14 +5,14 @@ from typing_extensions import Buffer
 
 class _SupportsTupleIndexing(Protocol):
     """Protocol for objects that support tuple indexing like arr[i, j]."""
-    def __getitem__(self, key: tuple[int, int]) -> float: ...
+    def __getitem__(self, key: tuple[int, int], /) -> float: ...
 
 class _SupportsNestedIndexing(Protocol):
     """Protocol for objects that support nested indexing like arr[i][j]."""
-    def __getitem__(self, key: int) -> Sequence[float]: ...
+    def __getitem__(self, key: int, /) -> Sequence[float]: ...
 
 # Type alias for _Mat4 constructor 'v' parameter
-Mat4InitValue: TypeAlias = (
+_Mat4InitValue: TypeAlias = (
     # Another _Mat4 instance
     "_Mat4"
     |
@@ -35,7 +35,7 @@ Mat4InitValue: TypeAlias = (
 class _Mat4:
     """4x4 matrix base class."""
 
-    def __init__(self, v: Mat4InitValue = ((1.0, 0.0, 0.0, 0.0), (0.0, 1.0, 0.0, 0.0), (0.0, 0.0, 1.0, 0.0), (0.0, 0.0, 0.0, 1.0))) -> None:
+    def __init__(self, v: _Mat4InitValue = ((1.0, 0.0, 0.0, 0.0), (0.0, 1.0, 0.0, 0.0), (0.0, 0.0, 1.0, 0.0), (0.0, 0.0, 0.0, 1.0))) -> None:
         """
         4x4 Matrix constructor.
 
@@ -44,7 +44,7 @@ class _Mat4:
         Any 4 x 4 indexable or 16 element object can be used to initialise the
         matrix. 16 element objects must be specified in row-major format.
         """
-    def __getitem__(self, index: tuple[int, int]) -> float:
+    def __getitem__(self, index: tuple[int, int], /) -> float:
         """
         Indexing get operator.
 
@@ -52,7 +52,7 @@ class _Mat4:
 
         e.g. v = matrix[1, 2]
         """
-    def __setitem__(self, index: tuple[int, int], value: float) -> None:
+    def __setitem__(self, index: tuple[int, int], value: float, /) -> None:
         """
         Indexing set operator.
 

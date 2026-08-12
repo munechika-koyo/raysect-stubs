@@ -32,9 +32,7 @@ class Vector2D:
         """Initialize self.  See help(type(self)) for accurate signature."""
     def __repr__(self) -> str:
         """Returns a string representation of the Vector2D object."""
-    def __richcmp__(self, other: Vector2D, op: int) -> bool:
-        """Provides basic vector comparison operations."""
-    def __getitem__(self, index: int) -> float:
+    def __getitem__(self, index: int, /) -> float:
         """
         Returns the vector coordinates by index ([0,1] -> [x,y]).
 
@@ -42,7 +40,7 @@ class Vector2D:
             >>> a[0]
             1
         """
-    def __setitem__(self, index: int, value: float) -> None:
+    def __setitem__(self, index: int, value: float, /) -> None:
         """
         Sets the vector coordinates by index ([0,1] -> [x,y]).
 
@@ -70,35 +68,35 @@ class Vector2D:
             Vector2D(-1.0, -0.0)
 
         """
-    def __add__(self, other: Vector2D) -> Vector2D:
+    def __add__(self, other: Vector2D, /) -> Vector2D:
         """
         Addition operator.
 
             >>> Vector2D(1, 0) + Vector2D(0, 1)
             Vector2D(1.0, 1.0)
         """
-    def __sub__(self, other: Vector2D) -> Vector2D:
+    def __sub__(self, other: Vector2D, /) -> Vector2D:
         """
         Subtraction operator.
 
             >>> Vector2D(1, 0) - Vector2D(0, 1)
             Vector2D(1.0, -1.0)
         """
-    def __mul__(self, other: float) -> Vector2D:
+    def __mul__(self, other: float, /) -> Vector2D:
         """
         Multiplication operator.
 
             >>> Vector3D(1, 2) * 2
             Vector2D(2.0, 4.0)
         """
-    def __rmul__(self, other: float) -> Vector2D:
+    def __rmul__(self, other: float, /) -> Vector2D:
         """
         Reverse multiplication operator.
 
             >>> 2 * Vector3D(1, 2)
             Vector2D(2.0, 4.0)
         """
-    def __truediv__(self, other: float) -> Vector2D:
+    def __truediv__(self, other: float, /) -> Vector2D:
         """
         Division operator.
 
@@ -121,7 +119,7 @@ class Vector2D:
         """
     @length.setter
     def length(self, value: float) -> None: ...
-    def dot(self, b: Vector2D) -> float:
+    def dot(self, v: Vector2D) -> float:
         """
         Calculates the dot product between this vector and the supplied vector.
 
@@ -135,7 +133,7 @@ class Vector2D:
             1.0
 
         """
-    def cross(self, b: Vector2D) -> float:
+    def cross(self, v: Vector2D) -> float:
         """
         Calculates the 2D cross product analogue between this vector and the supplied vector
 
@@ -225,9 +223,7 @@ class Vector3D(_Vec3):
     def __init__(self, x: float = 0.0, y: float = 0.0, z: float = 1.0) -> None: ...
     def __repr__(self) -> str:
         """Returns a string representation of the Vector3D object."""
-    def __richcmp__(self, other: Vector3D, op: int) -> bool:
-        """Provides basic vector comparison operations."""
-    def __getitem__(self, index: int) -> float:
+    def __getitem__(self, index: int, /) -> float:
         """
         Returns the vector coordinates by index ([0,1,2] -> [x,y,z]).
 
@@ -235,7 +231,7 @@ class Vector3D(_Vec3):
             >>> a[0]
             1
         """
-    def __setitem__(self, index: int, value: float) -> None:
+    def __setitem__(self, index: int, value: float, /) -> None:
         """
         Sets the vector coordinates by index ([0,1,2] -> [x,y,z]).
 
@@ -261,35 +257,35 @@ class Vector3D(_Vec3):
             >>> -a
             Vector3D(-1.0, -0.0, -0.0)
         """
-    def __add__(self, y: _Vec3) -> Vector3D:
+    def __add__(self, y: _Vec3, /) -> Vector3D:
         """
         Addition operator.
 
             >>> Vector3D(1, 0, 0) + Vector3D(0, 1, 0)
             Vector3D(1.0, 1.0, 0.0)
         """
-    def __radd__(self, x: _Vec3) -> Vector3D:
+    def __radd__(self, x: _Vec3, /) -> Vector3D:
         """
         Reverse addition operator.
 
             >>> Vector3D(1, 0, 0) + Vector3D(0, 1, 0)
             Vector3D(1.0, 1.0, 0.0)
         """
-    def __sub__(self, y: _Vec3) -> Vector3D:
+    def __sub__(self, y: _Vec3, /) -> Vector3D:
         """
         Subtraction operator.
 
             >>> Vector3D(1, 0, 0) - Vector3D(0, 1, 0)
             Vector3D(1.0, -1.0, 0.0)
         """
-    def __rsub__(self, x: _Vec3) -> Vector3D:
+    def __rsub__(self, x: _Vec3, /) -> Vector3D:
         """
         Reverse subtraction operator.
 
            >>> Vector3D(1, 0, 0) - Vector3D(0, 1, 0)
            Vector3D(1.0, -1.0, 0.0)
         """
-    def __mul__(self, y: float) -> Vector3D:
+    def __mul__(self, y: float, /) -> Vector3D:
         """
         Multiplication operator.
 
@@ -299,7 +295,7 @@ class Vector3D(_Vec3):
             >>> Vector3D(1, 2, 3) * 2
             Vector3D(2.0, 4.0, 6.0)
         """
-    def __rmul__(self, x: float) -> Vector3D:
+    def __rmul__(self, x: float, /) -> Vector3D:
         """
         Reverse multiplication operator.
 
@@ -311,7 +307,7 @@ class Vector3D(_Vec3):
             >>> rotate_x(90) * Vector3D(0, 0, 1)
             Vector3D(0.0, -1.0, 0.0)
         """
-    def __truediv__(self, y: float) -> Vector3D:
+    def __truediv__(self, y: float, /) -> Vector3D:
         """Division operator.
 
         >>> Vector3D(1, 1, 1) / 2

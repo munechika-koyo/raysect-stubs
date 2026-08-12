@@ -27,6 +27,3 @@ class PythonFunction2D(Function2D):
     function: Callable[[float, float], float]
 
     def __init__(self, function: Callable[[float, float], float]) -> None: ...
-
-def _autowrap_function2d(obj: Function2D | float | Callable[[float, float], float]) -> Function2D:
-    """Expose cython function for testing."""

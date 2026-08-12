@@ -13,9 +13,6 @@ from ...core.ray import Ray
 from ...core.scenegraph import Primitive
 from ...core.scenegraph._nodebase import _NodeBase
 
-DEFAULT_AFFINEMATRIX = AffineMatrix3D()
-DEFAULT_MATERIAL = Material()
-
 class MeshIntersection(Intersection):
     """
     Describes the result of a ray-primitive intersection with a Mesh primitive.
@@ -351,7 +348,7 @@ class Mesh(Primitive):
 
         :return: An Intersection or None.
         """
-    def contains(self, point: Point3D) -> bool:
+    def contains(self, p: Point3D) -> bool:
         """
         Identifies if the point lies in the volume defined by the mesh.
 
@@ -360,7 +357,7 @@ class Mesh(Primitive):
         This method will fail if the face normals of the mesh triangles are not
         oriented to be pointing out of the volume surface.
 
-        :param point: The point to test.
+        :param p: The point to test.
         :return: True if the point lies in the volume, False otherwise.
         """
     def bounding_box(self) -> BoundingBox3D:
@@ -403,8 +400,8 @@ class Mesh(Primitive):
         cls,
         file: StrOrBytesPath | SupportsRead[bytes],
         parent: _NodeBase | None = None,
-        transform: AffineMatrix3D = DEFAULT_AFFINEMATRIX,
-        material: Material = DEFAULT_MATERIAL,
+        transform: AffineMatrix3D = ...,
+        material: Material = ...,
         name: str = "",
     ) -> Self:
         """

@@ -1,10 +1,10 @@
-from typing import Literal
+from typing import Any, Literal
 
 from .mesh import Mesh
 
-STL_AUTOMATIC = "auto"
-STL_ASCII = "ascii"
-STL_BINARY = "binary"
+STL_AUTOMATIC: Literal["auto"] = "auto"
+STL_ASCII: Literal["ascii"] = "ascii"
+STL_BINARY: Literal["binary"] = "binary"
 
 class STLHandler:
     @classmethod
@@ -13,7 +13,7 @@ class STLHandler:
         filename: str,
         scaling: float = 1.0,
         mode: Literal["auto", "ascii", "binary"] = STL_AUTOMATIC,
-        **kwargs,
+        **kwargs: Any,
     ) -> Mesh:
         """
         Create a mesh instance from a STereoLithography (STL) mesh file (.stl).
@@ -68,7 +68,7 @@ def import_stl(
     filename: str,
     scaling: float = 1.0,
     mode: Literal["auto", "ascii", "binary"] = STL_AUTOMATIC,
-    **kwargs,
+    **kwargs: Any,
 ) -> Mesh:
     """
     Create a mesh instance from a STereoLithography (STL) mesh file (.stl).

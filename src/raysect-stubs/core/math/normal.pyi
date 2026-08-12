@@ -30,23 +30,21 @@ class Normal3D(_Vec3):
     def __init__(self, x: float = 0.0, y: float = 0.0, z: float = 1.0) -> None: ...
     def __repr__(self) -> str:
         """Returns a string representation of the Normal3D object."""
-    def __richcmp__(self, other: Normal3D, op: int) -> bool:
-        """Provides basic normal comparison operations."""
     def __neg__(self) -> Normal3D:
         """Returns a normal with the reverse orientation."""
-    def __add__(self, y: _Vec3) -> Normal3D:
+    def __add__(self, y: _Vec3, /) -> Normal3D:
         """Addition operator."""
-    def __radd__(self, x: _Vec3) -> Normal3D:
+    def __radd__(self, x: _Vec3, /) -> Normal3D:
         """Reverse addition operator."""
-    def __sub__(self, y: _Vec3) -> Normal3D:
+    def __sub__(self, y: _Vec3, /) -> Normal3D:
         """Subtract operator."""
-    def __rsub__(self, x: _Vec3) -> Normal3D:
+    def __rsub__(self, x: _Vec3, /) -> Normal3D:
         """Reverse subtract operator."""
-    def __mul__(self, y: float) -> Normal3D:
+    def __mul__(self, y: float, /) -> Normal3D:
         """Multiply operator."""
-    def __rmul__(self, x: float | AffineMatrix3D) -> Normal3D:
+    def __rmul__(self, x: float | AffineMatrix3D, /) -> Normal3D:
         """Reverse multiply operator."""
-    def __truediv__(self, y: float) -> Normal3D:
+    def __truediv__(self, y: float, /) -> Normal3D:
         """Division operator."""
     def cross(self, v: _Vec3) -> Vector3D:
         """

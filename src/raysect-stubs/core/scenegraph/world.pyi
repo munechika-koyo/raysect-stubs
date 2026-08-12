@@ -5,7 +5,6 @@ from ..ray import Ray
 from ._nodebase import _NodeBase
 from .observer import Observer
 from .primitive import Primitive
-from .signal import ChangeSignal
 
 class World(_NodeBase):
     """
@@ -37,14 +36,14 @@ class World(_NodeBase):
     @property
     def primitives(self) -> list[Primitive]:
         """
-        A list of all primitives registered with this world.
+        The list of primitives maintained in this scene-graph.
 
         :rtype: list
         """
     @property
     def observers(self) -> list[Observer]:
         """
-        A list of all observers registered with this world.
+        The list of observers in this scene-graph.
 
         :rtype: list
         """
@@ -119,28 +118,4 @@ class World(_NodeBase):
         Acceleration object rebuild.
 
         :param bool force: If set to True, forces rebuilding of acceleration structure.
-        """
-    def _register(self, node: _NodeBase) -> None:
-        """
-        Adds observers and primitives to the World's object tracking lists.
-        """
-    def _deregister(self, node: _NodeBase) -> None:
-        """
-        Removes observers and primitives from the World's object tracking lists.
-        """
-    def _change(self, node: _NodeBase, signal: ChangeSignal) -> None:
-        """
-        Notifies the World of a change to the scene-graph.
-
-        This method must be called is a change occurs that may have invalidated
-        any acceleration structures held by the World.
-
-        The node on which the change occurs and a ChangeSignal must be
-        provided. The ChangeSignal must specify the nature of the change to the
-        scene-graph.
-
-        The core World object only recognises the GEOMETRY signal. When a
-        GEOMETRY signal is received, the world will be instructed to rebuild
-        it's spatial acceleration structures on the next call to any method
-        that interacts with the scene-graph geometry.
         """

@@ -63,7 +63,7 @@ class RGBPipeline2D(Pipeline2D):
     @property
     def display_auto_exposure(self) -> bool:
         """
-        Toggles the use of automatic exposure of final images.
+        Toggles the use of automatic exposure on final image.
 
         :rtype: bool
         """
@@ -72,8 +72,8 @@ class RGBPipeline2D(Pipeline2D):
     @property
     def display_unsaturated_fraction(self) -> float:
         """
-        Fraction of pixels that must not be saturated. Display values will be
-        scaled to satisfy this value.
+        Fraction of pixels that must not be saturated. Display values will
+        be scaled to satisfy this value.
 
         :rtype: float
         """
@@ -101,25 +101,6 @@ class RGBPipeline2D(Pipeline2D):
     def pixel_processor(self, x: int, y: int, slice_id: int) -> PixelProcessor: ...
     def update(self, x: int, y: int, slice_id: int, packed_result: tuple[NDArray[np.float64], NDArray[np.float64]]) -> None: ...
     def finalise(self) -> None: ...
-    def _start_display(self) -> None:
-        """
-        Display live render.
-        """
-    def _update_display(self, x: int, y: int) -> None:
-        """
-        Update live render.
-        """
-    def _refresh_display(self) -> None:
-        """
-        Refreshes the display window (if active) and frame data is present.
-
-        This method is called when display attributes are changed to refresh
-        the display according to the new settings.
-        """
-    def _render_display(self, frame: StatsArray3D, status: str | None = None) -> None: ...
-    def _generate_display_image(self, frame: StatsArray3D) -> NDArray[np.float64]: ...
-    def _calculate_sensitivity(self, image: NDArray[np.float64]) -> float: ...
-    def _generate_srgb_image(self, image: NDArray[np.float64]) -> NDArray[np.float64]: ...
     def display(self) -> None:
         """
         Plot the RGB frame.

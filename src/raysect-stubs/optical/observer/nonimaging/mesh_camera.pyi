@@ -99,7 +99,7 @@ class MeshCamera(Observer1D):
         """
     @property
     def sensitivitys(self) -> NDArray[np.float64]: ...
-    def sensitivity(self, *args, **kwargs):
+    def sensitivity(self, pixel: int) -> float:
         """
         The mesh camera's sensitivity measured in units of per area per solid angle (m^-2 str^-1).
 

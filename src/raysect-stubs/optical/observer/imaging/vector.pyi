@@ -3,7 +3,6 @@ from numpy.typing import NDArray
 
 from ....core.math import AffineMatrix3D
 from ....core.scenegraph._nodebase import _NodeBase
-from ... import Ray
 from ..base import Observer2D, Pipeline2D
 from ..sampler2d import FrameSampler2D
 
@@ -24,6 +23,9 @@ class VectorCamera(Observer2D):
       at each pixel by the camera (default=RGBPipeline2D()).
     :param kwargs: **kwargs and properties from Observer2D and _ObserverBase.
     """
+
+    pixel_origins: NDArray[np.float64]
+    pixel_directions: NDArray[np.float64]
 
     def __init__(
         self,
@@ -47,5 +49,3 @@ class VectorCamera(Observer2D):
         """
     @sensitivity.setter
     def sensitivity(self, value: float) -> None: ...
-    def _generate_rays(self, x: int, y: int, template: Ray, ray_count: int) -> list[tuple[Ray, float]]: ...
-    def _pixel_sensitivity(self, x: int, y: int) -> float: ...

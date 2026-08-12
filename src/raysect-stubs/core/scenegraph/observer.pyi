@@ -1,5 +1,3 @@
-from abc import abstractmethod
-
 from .node import Node
 
 class Observer(Node):
@@ -10,7 +8,6 @@ class Observer(Node):
     must be implemented by a deriving class. This object is the fundamental abstraction for items such as cameras,
     fibre optics and other sampling objects.
     """
-    @abstractmethod
     def observe(self) -> None:
         """
         Virtual method - to be implemented by derived classes.

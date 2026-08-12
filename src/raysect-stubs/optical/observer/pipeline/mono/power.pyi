@@ -1,8 +1,5 @@
-import numpy as np
-from numpy.typing import NDArray
-
 from .....core.math import StatsArray1D, StatsArray2D, StatsBin
-from ....spectralfunction import ConstantSF, SpectralFunction
+from ....spectralfunction import SpectralFunction
 from ....spectrum import Spectrum
 from ...base.pipeline import Pipeline0D, Pipeline1D, Pipeline2D
 from ...base.processor import PixelProcessor
@@ -11,8 +8,6 @@ from ...base.slice import SpectralSlice
 _DEFAULT_PIPELINE_NAME: str = "Power Pipeline"
 _DISPLAY_DPI: int = 100
 _DISPLAY_SIZE: tuple[float, float] = (5.12, 5.12)
-
-CONSTANTSF = ConstantSF(1.0)
 
 class PowerPipeline0D(Pipeline0D):
     """
@@ -37,7 +32,7 @@ class PowerPipeline0D(Pipeline0D):
 
     def __init__(
         self,
-        filter: SpectralFunction | None = CONSTANTSF,
+        filter: SpectralFunction | None = ...,
         accumulate: bool = True,
         name: str = _DEFAULT_PIPELINE_NAME,
     ) -> None: ...
@@ -46,7 +41,7 @@ class PowerPipeline0D(Pipeline0D):
         min_wavelength: float,
         max_wavelength: float,
         spectral_bins: int,
-        spectral_slices: list,
+        spectral_slices: list[SpectralSlice],
         quiet: bool,
     ) -> None: ...
     def pixel_processor(self, slice_id: int) -> PixelProcessor: ...
@@ -78,7 +73,7 @@ class PowerPipeline1D(Pipeline1D):
 
     def __init__(
         self,
-        filter: SpectralFunction | None = CONSTANTSF,
+        filter: SpectralFunction | None = ...,
         accumulate: bool = True,
         name: str = _DEFAULT_PIPELINE_NAME,
     ) -> None: ...
@@ -135,7 +130,7 @@ class PowerPipeline2D(Pipeline2D):
 
     def __init__(
         self,
-        filter: SpectralFunction | None = CONSTANTSF,
+        filter: SpectralFunction | None = ...,
         display_progress: bool = True,
         display_update_time: float = 15.0,
         accumulate: bool = True,
@@ -183,24 +178,6 @@ class PowerPipeline2D(Pipeline2D):
     def pixel_processor(self, x: int, y: int, slice_id: int) -> PixelProcessor: ...
     def update(self, x: int, y: int, slice_id: int, packed_result: tuple[float, float]) -> None: ...
     def finalise(self) -> None: ...
-    def _start_display(self) -> None:
-        """
-        Display live render.
-        """
-    def _update_display(self, x: int, y: int) -> None:
-        """
-        Update live render.
-        """
-    def _refresh_display(self) -> None:
-        """
-        Refreshes the display window (if active) and frame data is present.
-
-        This method is called when display attributes are changed to refresh
-        the display according to the new settings.
-        """
-    def _render_display(self, frame: StatsArray2D, status: str | None = None): ...
-    def _generate_display_image(self, frame: StatsArray2D) -> NDArray[np.float64]: ...
-    def _calculate_white_point(self, image: NDArray[np.float64]) -> float: ...
     def display(self) -> None: ...
     def save(self, filename: str) -> None:
         """

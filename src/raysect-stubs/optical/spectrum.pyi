@@ -1,7 +1,7 @@
 import numpy as np
 from numpy.typing import NDArray
 
-from .spectralfunction import SpectralFunction
+from .spectralfunction import SpectralFunction as SpectralFunction
 
 class Spectrum(SpectralFunction):
     """
@@ -155,7 +155,7 @@ class Spectrum(SpectralFunction):
         Resets the sample values in the spectrum to zero.
         """
 
-    def new_spectrum(self, *args, **kwargs) -> Spectrum:
+    def new_spectrum(self) -> Spectrum:
         """
         Returns a new Spectrum compatible with the same spectral settings.
 

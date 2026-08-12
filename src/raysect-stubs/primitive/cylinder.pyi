@@ -1,3 +1,5 @@
+from typing import Any
+
 from ..core.boundingbox import BoundingBox3D
 from ..core.intersection import Intersection
 from ..core.material import Material
@@ -36,8 +38,6 @@ class Cylinder(Primitive):
                                 material=UniformSurfaceEmitter(blue), name="blue cylinder")
     """
 
-    height: float
-    radius: float
     def __init__(
         self,
         radius: float = 0.5,
@@ -46,7 +46,7 @@ class Cylinder(Primitive):
         transform: AffineMatrix3D | None = None,
         material: Material | None = None,
         name: str | None = None,
-        **kwargs,
+        **kwargs: Any,
     ) -> None: ...
     @property
     def radius(self) -> float:
@@ -64,7 +64,7 @@ class Cylinder(Primitive):
     def height(self, value: float) -> None: ...
     def hit(self, ray: Ray) -> Intersection | None: ...
     def next_intersection(self) -> Intersection | None: ...
-    def contains(self, point: Point3D) -> bool: ...
+    def contains(self, point: Point3D) -> bool: ...  # pyrefly: ignore [bad-override-param-name]
     def bounding_box(self) -> BoundingBox3D: ...
     def instance(
         self,

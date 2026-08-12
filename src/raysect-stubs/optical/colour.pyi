@@ -38,7 +38,7 @@ def spectrum_to_ciexyz(spectrum: Spectrum, resampled_xyz: memoryview | None = No
     :rtype: tuple
     """
 
-def ciexyy_to_ciexyz(cx: float, cy: float, Y: float) -> tuple[float, float, float]:
+def ciexyy_to_ciexyz(cx: float, cy: float, y: float) -> tuple[float, float, float]:
     """
     Performs conversion from CIE xyY to CIE XYZ colour space
 
