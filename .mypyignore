@@ -1,2 +1,14 @@
 # Test files
 raysect\.((_|\w)+\.)+(__test__|test|tests(\..+)?)
+
+# Cython generated implementation details
+raysect(\.\w+)+\.(__pyx_capi__|__pyx_vtable__|__pyx_unpickle_\w+|__(reduce|setstate)_cython__)
+
+# Implementation-only private APIs are intentionally outside this package's scope.
+# Documented Python subclass extension hooks remain in the stubs.
+raysect(\.\w+)*\._\w+(\.\w+)*
+
+# Names imported only for module implementation, not as public APIs
+raysect\.core\.scenegraph\.(primitive|world)\.(GEOMETRY|MATERIAL)
+raysect\.optical\.material\.debug\.d65_white
+raysect\.core\.math\.function\.float\.function3d\.interpolate\.interpolator3darray\.(id_to_extrapolator|id_to_interpolator|permitted_interpolation_combinations)
