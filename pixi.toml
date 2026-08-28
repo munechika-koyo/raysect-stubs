@@ -65,8 +65,14 @@ raysect = "*"
 raysect-stubs = { path = ".", editable = false }
 
 [feature.test.tasks]
-test-regression = { cmd = "pytest -q tests/test_stubs.py", description = "Run regression tests for the stubs" }
-test-stubtest = { cmd = "stubtest --allowlist=.mypyignore --ignore-disjoint-bases raysect", description = "Check stubs against the Raysect runtime" }
+test-regression = {
+  cmd = "pytest -q tests/test_stubs.py",
+  description = "Run regression tests for the stubs",
+}
+test-stubtest = {
+  cmd = "stubtest --allowlist=.mypyignore --ignore-disjoint-bases raysect",
+  description = "Check stubs against the Raysect runtime",
+}
 test = {
   depends-on = [
     "test-regression",
@@ -127,8 +133,14 @@ python-build = "*"
 raysect-stubs = { path = "." }
 
 [feature.build.tasks]
-build-wheel = { cmd = "python -m build -nx -w", description = "🔧 Build wheel distribution" }
-build-sdist = { cmd = "python -m build -nx -s", description = "🔧 Build source distribution" }
+build-wheel = {
+  cmd = "python -m build -nx -w",
+  description = "🔧 Build wheel distribution",
+}
+build-sdist = {
+  cmd = "python -m build -nx -s",
+  description = "🔧 Build source distribution",
+}
 
 # === Python environment features ===
 [feature.py-oldest.dependencies]
@@ -139,15 +151,10 @@ python = "3.14.*"
 
 [environments]
 default = { features = ["py-latest"], solve-group = "py-latest" }
-py-latest = {
-  features = [
-    "py-latest",
-  ],
-  solve-group = "py-latest"
-}  # alias of test
+py-latest = { features = ["py-latest"], solve-group = "py-latest" }
 py-oldest = { features = ["py-oldest"], solve-group = "py-oldest" }
 test = { features = ["test"], no-default-feature = true }
-test-pylatest = { features = ["test", "py-latest"], no-default-feature = true }
+test-pylatest = { features = ["test", "py-latest"], no-default-feature = true }  # alias of test
 test-pyoldest = { features = ["test", "py-oldest"], no-default-feature = true }
 lint = ["lint", "default"]
 build = { features = ["build"], no-default-feature = true }
