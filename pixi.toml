@@ -7,7 +7,7 @@ preview = ["pixi-build"]
 # === Packaging Configuration ===
 # -------------------------------
 [package]
-version = "dynamic" # Until pixi recommends something else
+version = "dynamic"  # Until pixi recommends something else
 
 [package.build]
 backend = { name = "pixi-build-python", version = "*" }
@@ -42,16 +42,19 @@ ipython = ">=8.37.0,<10"
 type-check = "mypy raysect-stubs/"
 
 # Type stub generation
-typegen = { cmd = [
-  "stubgen",
-  "-p",
-  "raysect",
-  "-o",
-  "stubgen_temp",
-  "--ignore-errors",
-  "--include-private",
-  "--include-docstrings",
-], description = "📝 Generate type stubs for raysect" }
+typegen = {
+  cmd = [
+    "stubgen",
+    "-p",
+    "raysect",
+    "-o",
+    "stubgen_temp",
+    "--ignore-errors",
+    "--include-private",
+    "--include-docstrings",
+  ],
+  description = "📝 Generate type stubs for raysect"
+}
 
 [feature.test.dependencies]
 mypy = "*"
@@ -64,10 +67,13 @@ raysect-stubs = { path = ".", editable = false }
 [feature.test.tasks]
 test-regression = { cmd = "pytest -q tests/test_stubs.py", description = "Run regression tests for the stubs" }
 test-stubtest = { cmd = "stubtest --allowlist=.mypyignore --ignore-disjoint-bases raysect", description = "Check stubs against the Raysect runtime" }
-test = { depends-on = [
-  "test-regression",
-  "test-stubtest",
-], description = "Run all stub tests" }
+test = {
+  depends-on = [
+    "test-regression",
+    "test-stubtest",
+  ],
+  description = "Run all stub tests"
+}
 
 # === Linting feature ===
 [feature.lint.dependencies]
@@ -81,7 +87,7 @@ actionlint = "*"
 shellcheck = "*"
 validate-pyproject = "*"
 blacken-docs = "*"
-taplo = "*"
+tombi = "*"
 
 [feature.lint.tasks]
 lefthook = { cmd = "lefthook", description = "🔗 Run lefthook" }
@@ -91,24 +97,27 @@ mypy = { cmd = "mypy", description = "Type check with mypy" }
 pyrefly-check = { cmd = "pyrefly check", description = "Type check with pyrefly" }
 ruff-check = { cmd = "ruff check --fix", description = "Lint with ruff" }
 ruff-format = { cmd = "ruff format", description = "Format with ruff" }
+toml-format = { cmd = "tombi format", description = "Format TOML files" }
 dprint = { cmd = "dprint fmt", description = "Format with dprint" }
 typos = { cmd = "typos --write-changes --force-exclude", description = "Fix typos" }
-taplo = { cmd = "taplo fmt", description = "Format toml files with taplo" }
 actionlint = { cmd = "actionlint", description = "Lint actions with actionlint" }
 blacken-docs = { cmd = "blacken-docs", description = "Format Python markdown blocks with Black" }
 validate-pyproject = { cmd = "validate-pyproject pyproject.toml", description = "Validate pyproject.toml" }
 lint = { cmd = "lefthook run pre-commit --all-files --force", description = "🧹 Run all linters" }
 
 [feature.tools.tasks]
-typegen-update = { cmd = [
-  "rm",
-  "-rf",
-  "src/raysect-stubs/*",
-  "&&",
-  "mv",
-  "stubgen_temp/raysect/*",
-  "src/raysect-stubs/",
-], description = "📝 Update type stubs for raysect" }
+typegen-update = {
+  cmd = [
+    "rm",
+    "-rf",
+    "src/raysect-stubs/*",
+    "&&",
+    "mv",
+    "stubgen_temp/raysect/*",
+    "src/raysect-stubs/",
+  ],
+  description = "📝 Update type stubs for raysect"
+}
 
 # === Build feature ===
 [feature.build.dependencies]
@@ -124,14 +133,18 @@ build-sdist = { cmd = "python -m build -nx -s", description = "🔧 Build source
 # === Python environment features ===
 [feature.py-oldest.dependencies]
 python = "3.10.*"
+
 [feature.py-latest.dependencies]
 python = "3.14.*"
 
 [environments]
 default = { features = ["py-latest"], solve-group = "py-latest" }
-py-latest = { features = [
-  "py-latest",
-], solve-group = "py-latest" } # alias of test
+py-latest = {
+  features = [
+    "py-latest",
+  ],
+  solve-group = "py-latest"
+}  # alias of test
 py-oldest = { features = ["py-oldest"], solve-group = "py-oldest" }
 test = { features = ["test"], no-default-feature = true }
 test-pylatest = { features = ["test", "py-latest"], no-default-feature = true }
