@@ -1,6 +1,8 @@
 from collections.abc import Callable
 from typing import TypeAlias, overload
 
+from ...vector3d.function3d.base import Function3D as VectorFunction3D
+from ...vector3d.function3d.base import MultiplyFunction3D as MultiplyVectorFunction3D
 from ..base import FloatFunction
 
 _Function3DCallable: TypeAlias = Callable[[float, float, float], float]
@@ -46,6 +48,8 @@ class Function3D(FloatFunction):
     @overload
     def __rsub__(self, other: float, /) -> SubtractScalar3D: ...
     @overload
+    def __mul__(self, other: VectorFunction3D, /) -> MultiplyVectorFunction3D: ...
+    @overload
     def __mul__(self, other: Function3D | _Function3DCallable, /) -> MultiplyFunction3D: ...
     @overload
     def __mul__(self, other: float, /) -> MultiplyScalar3D: ...
@@ -75,9 +79,12 @@ class Function3D(FloatFunction):
     @overload
     def __pow__(self, other: float, modulo: None = None, /) -> PowFunctionScalar3D: ...
     @overload
-    def __pow__(self, other: Function3D | _Function3DCallable | float, modulo: Function3D | _Function3DCallable, /) -> ModuloFunction3D: ...
-    @overload
-    def __pow__(self, other: Function3D | _Function3DCallable | float, modulo: float, /) -> ModuloFunctionScalar3D: ...
+    def __pow__(
+        self,
+        other: Function3D | _Function3DCallable | float,
+        modulo: Function3D | _Function3DCallable | float,
+        /,
+    ) -> ModuloFunction3D | ModuloFunctionScalar3D: ...
     @overload
     def __rpow__(self, other: Function3D | _Function3DCallable, modulo: None = None, /) -> PowFunction3D: ...
     @overload

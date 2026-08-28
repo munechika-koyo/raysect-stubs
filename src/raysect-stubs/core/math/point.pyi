@@ -69,7 +69,6 @@ class Point2D:
         >>> Point2D(1, 0) - Vector2D(0, 1)
         Point2D(1.0, -1.0)
         """
-    def __rmul__(self, x: AffineMatrix3D, /) -> Point2D: ...
     def vector_to(self, p: Point2D) -> Vector2D:
         """
         Returns a vector from this point to the passed point.

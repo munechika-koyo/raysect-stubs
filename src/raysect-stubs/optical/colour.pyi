@@ -15,7 +15,7 @@ d65_wavelength_samples: NDArray[np.float64]
 d65_white_samples: NDArray[np.float64]
 d65_white: InterpolatedSF
 
-def resample_ciexyz(min_wavelength: float, max_wavelength: float, bins: int) -> NDArray[np.float64]:
+def resample_ciexyz(min_wavelength: float, max_wavelength: float, bins: int) -> memoryview:
     """
     Pre-calculates samples of XYZ sensitivity curves over desired spectral range.
 
@@ -28,7 +28,7 @@ def resample_ciexyz(min_wavelength: float, max_wavelength: float, bins: int) -> 
     :rtype: memoryview
     """
 
-def spectrum_to_ciexyz(spectrum: Spectrum, resampled_xyz: memoryview | None = None) -> tuple[float, float, float]:
+def spectrum_to_ciexyz(spectrum: Spectrum, resampled_xyz: memoryview | NDArray[np.float64] | None = None) -> tuple[float, float, float]:
     """
     Calculates a tuple of CIE X, Y, Z values from an input spectrum
 

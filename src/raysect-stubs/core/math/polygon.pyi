@@ -1,7 +1,7 @@
 import numpy as np
-from numpy.typing import NDArray
+from numpy.typing import ArrayLike, NDArray
 
-def triangulate2d(vertices: NDArray[np.float64]) -> NDArray[np.float64]:
+def triangulate2d(vertices: ArrayLike) -> NDArray[np.int32]:
     """
     Triangulates a N sided simple polygon.
 

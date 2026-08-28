@@ -295,7 +295,7 @@ class Vector3D(_Vec3):
             >>> Vector3D(1, 2, 3) * 2
             Vector3D(2.0, 4.0, 6.0)
         """
-    def __rmul__(self, x: float, /) -> Vector3D:
+    def __rmul__(self, x: float | AffineMatrix3D, /) -> Vector3D:
         """
         Reverse multiplication operator.
 
